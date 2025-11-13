@@ -8,12 +8,10 @@ const Navbar = () => {
   const { user, logout, loading } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // daisyUI theme state (light / dark)
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "light"
   );
 
-  // apply theme to <html data-theme="...">
   useEffect(() => {
     localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
@@ -32,7 +30,7 @@ const Navbar = () => {
   };
 
   const linkBase =
-    "w-full md:w-auto px-3 py-1 rounded-full transition-all duration-300";
+    "text-sm w-full md:w-auto px-2 py-1 rounded-full transition-all duration-300";
   const getLinkClass = ({ isActive }) =>
     `${linkBase} ${
       isActive
@@ -50,12 +48,12 @@ const Navbar = () => {
       <NavLink to="/models" className={getLinkClass}>
         View Models
       </NavLink>
+      <NavLink to="/add-model" className={getLinkClass}>
+        Add Model
+      </NavLink>
 
       {user && (
         <>
-          <NavLink to="/add-model" className={getLinkClass}>
-            Add Model
-          </NavLink>
           <NavLink to="/my-models" className={getLinkClass}>
             My Models
           </NavLink>
@@ -80,7 +78,7 @@ const Navbar = () => {
             {/* center: nav links (desktop) */}
             <div className="navbar-center hidden md:flex">
               <ul>
-                <li className="flex items-center gap-2 font-poppins text-base-content/80">
+                <li className="flex items-center font-poppins text-base-content/80">
                   {navLinks}
                 </li>
               </ul>
