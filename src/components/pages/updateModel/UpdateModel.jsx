@@ -146,17 +146,19 @@ const UpdateModel = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-          <p className="text-sm text-slate-300">Loading model details...</p>
+          <p className="text-sm text-slate-700 dark:text-slate-300">
+            Loading model details...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-10 px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -165,15 +167,18 @@ const UpdateModel = () => {
           transition={{ duration: 0.5 }}
           className="mb-8 text-center"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-[11px] uppercase tracking-[0.18em] text-emerald-200 mb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Edit Model
           </div>
-          <h1 className="text-2xl md:text-3xl font-semibold text-slate-50">
-            Update your <span className="text-emerald-400">ModelMatrix AI</span>{" "}
+          <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
+            Update your{" "}
+            <span className="text-emerald-600 dark:text-emerald-400">
+              ModelMatrix AI
+            </span>{" "}
             entry
           </h1>
-          <p className="mt-2 text-sm text-slate-400 max-w-2xl mx-auto">
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Adjust the details of your AI model. Changes will be reflected on
             the details page and in the public catalog.
           </p>
@@ -184,7 +189,7 @@ const UpdateModel = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="bg-slate-950/80 border border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-2xl shadow-emerald-900/30 backdrop-blur"
+          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/30 backdrop-blur"
         >
           <form onSubmit={handleUpdate} className="space-y-5">
             {/* Row 1: Name + Framework */}
@@ -193,7 +198,7 @@ const UpdateModel = () => {
               <div className="space-y-1.5">
                 <label
                   htmlFor="name"
-                  className="text-xs font-medium text-slate-200"
+                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
                 >
                   Model Name
                 </label>
@@ -208,7 +213,7 @@ const UpdateModel = () => {
                     value={model.name}
                     onChange={handleChange}
                     placeholder="e.g. VisionX-Classifier"
-                    className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                     required
                   />
                 </div>
@@ -218,7 +223,7 @@ const UpdateModel = () => {
               <div className="space-y-1.5">
                 <label
                   htmlFor="framework"
-                  className="text-xs font-medium text-slate-200"
+                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
                 >
                   Framework
                 </label>
@@ -233,7 +238,7 @@ const UpdateModel = () => {
                     value={model.framework}
                     onChange={handleChange}
                     placeholder="e.g. TensorFlow, PyTorch"
-                    className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                     required
                   />
                 </div>
@@ -246,7 +251,7 @@ const UpdateModel = () => {
               <div className="space-y-1.5">
                 <label
                   htmlFor="useCase"
-                  className="text-xs font-medium text-slate-200"
+                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
                 >
                   Use Case
                 </label>
@@ -261,7 +266,7 @@ const UpdateModel = () => {
                     value={model.useCase}
                     onChange={handleChange}
                     placeholder="e.g. Image classification for medical scans"
-                    className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                     required
                   />
                 </div>
@@ -271,7 +276,7 @@ const UpdateModel = () => {
               <div className="space-y-1.5">
                 <label
                   htmlFor="dataset"
-                  className="text-xs font-medium text-slate-200"
+                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
                 >
                   Dataset
                 </label>
@@ -286,7 +291,7 @@ const UpdateModel = () => {
                     value={model.dataset}
                     onChange={handleChange}
                     placeholder="e.g. custom hospital dataset"
-                    className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                     required
                   />
                 </div>
@@ -297,7 +302,7 @@ const UpdateModel = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="image"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Image URL
               </label>
@@ -312,7 +317,7 @@ const UpdateModel = () => {
                   value={model.image}
                   onChange={handleChange}
                   placeholder="https://example.com/model-cover.png"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   required
                 />
               </div>
@@ -322,7 +327,7 @@ const UpdateModel = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="description"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Description
               </label>
@@ -337,7 +342,7 @@ const UpdateModel = () => {
                   value={model.description}
                   onChange={handleChange}
                   placeholder="Describe what this model does, its architecture, and any important notes for potential users."
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all resize-none"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all resize-none"
                   required
                 />
               </div>

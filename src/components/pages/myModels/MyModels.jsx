@@ -27,15 +27,6 @@ const MyModels = () => {
     });
   }, [user, axiosSecure]);
 
-  // useEffect(() => {
-  //   axiosSecure.get(`/models?email=${user?.email}`).then((res) => {
-  //     const myModels = res.data.result;
-  //     console.log(myModels);
-  //     setModels(myModels);
-  //     setLoading(false);
-  //   });
-  // }, [user, axiosSecure]);
-
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       icon: "warning",
@@ -52,7 +43,6 @@ const MyModels = () => {
     setDeletingId(id);
 
     try {
-      // 🔧 adjust endpoint if needed
       const { data } = await axiosSecure.delete(`/models/${id}`);
       console.log("delete response:", data);
 
@@ -87,7 +77,7 @@ const MyModels = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-10 px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <motion.div
@@ -97,15 +87,17 @@ const MyModels = () => {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-[11px] uppercase tracking-[0.18em] text-emerald-200 mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
               <Cpu className="h-3 w-3" />
               My Models
             </div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-slate-50">
+            <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
               Manage your{" "}
-              <span className="text-emerald-400">published models</span>
+              <span className="text-emerald-600 dark:text-emerald-400">
+                published models
+              </span>
             </h1>
-            <p className="mt-1 text-sm text-slate-400 max-w-xl">
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
               View, update, or delete the AI models you have added to
               ModelMatrix AI.
             </p>
@@ -124,13 +116,15 @@ const MyModels = () => {
           <div className="min-h-[40vh] flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
               <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-              <p className="text-sm text-slate-300">Loading your models...</p>
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                Loading your models...
+              </p>
             </div>
           </div>
         ) : models.length === 0 ? (
           <div className="min-h-[40vh] flex items-center justify-center">
             <div className="text-center space-y-3">
-              <p className="text-base text-slate-200">
+              <p className="text-base text-slate-800 dark:text-slate-200">
                 You haven&apos;t added any models yet.
               </p>
               <Link
@@ -146,11 +140,11 @@ const MyModels = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="bg-slate-950/80 border border-slate-800/80 rounded-3xl p-4 md:p-6 shadow-xl shadow-emerald-900/25 overflow-x-auto"
+            className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-6 shadow-xl dark:shadow-xl dark:shadow-emerald-900/25 overflow-x-auto"
           >
             <table className="min-w-full text-sm text-left align-middle">
               <thead>
-                <tr className="text-[11px] uppercase tracking-[0.18em] text-slate-400 border-b border-slate-800/80">
+                <tr className="text-[11px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 border-b border-slate-200/80 dark:border-slate-800/80">
                   <th className="py-3 pr-3 font-medium">Model</th>
                   <th className="py-3 pr-3 font-medium">Framework</th>
                   <th className="py-3 pr-3 font-medium">Use Case</th>
@@ -167,12 +161,12 @@ const MyModels = () => {
                 {models.map((model) => (
                   <tr
                     key={model._id}
-                    className="border-b border-slate-800/60 last:border-none hover:bg-slate-900/60 transition-colors"
+                    className="border-b border-slate-200/80 dark:border-slate-800/60 last:border-none hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-colors"
                   >
                     {/* Model name + tiny description */}
                     <td className="py-3 pr-3">
                       <div className="flex items-center gap-3">
-                        <div className="hidden sm:block w-12 h-12 rounded-xl overflow-hidden border border-slate-800/80 bg-slate-900/80">
+                        <div className="hidden sm:block w-12 h-12 rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 bg-slate-100 dark:bg-slate-900/80">
                           <img
                             src={model.image}
                             alt={model.name}
@@ -184,10 +178,10 @@ const MyModels = () => {
                           />
                         </div>
                         <div>
-                          <p className="text-slate-100 font-medium line-clamp-1">
+                          <p className="text-slate-900 dark:text-slate-100 font-medium line-clamp-1">
                             {model.name}
                           </p>
-                          <p className="text-[11px] text-slate-500 line-clamp-1">
+                          <p className="text-[11px] text-slate-600 dark:text-slate-500 line-clamp-1">
                             {model.description}
                           </p>
                         </div>
@@ -196,8 +190,8 @@ const MyModels = () => {
 
                     {/* Framework */}
                     <td className="py-3 pr-3 align-top">
-                      <div className="flex items-center gap-1.5 text-slate-200">
-                        <Layers className="h-3.5 w-3.5 text-emerald-400" />
+                      <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                        <Layers className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span className="truncate max-w-[120px] md:max-w-40">
                           {model.framework || "—"}
                         </span>
@@ -206,8 +200,8 @@ const MyModels = () => {
 
                     {/* Use case */}
                     <td className="py-3 pr-3 align-top">
-                      <div className="flex items-center gap-1.5 text-slate-200">
-                        <ListTree className="h-3.5 w-3.5 text-emerald-400" />
+                      <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                        <ListTree className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span className="truncate max-w-[150px] md:max-w-[200px]">
                           {model.useCase || "—"}
                         </span>
@@ -216,8 +210,8 @@ const MyModels = () => {
 
                     {/* Dataset */}
                     <td className="py-3 pr-3 align-top hidden md:table-cell">
-                      <div className="flex items-center gap-1.5 text-slate-200">
-                        <Database className="h-3.5 w-3.5 text-emerald-400" />
+                      <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                        <Database className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span className="truncate max-w-[180px]">
                           {model.dataset || "—"}
                         </span>
@@ -226,7 +220,7 @@ const MyModels = () => {
 
                     {/* Created date */}
                     <td className="py-3 pr-3 align-top hidden md:table-cell">
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-600 dark:text-slate-400">
                         {model.createdAt
                           ? new Date(model.createdAt).toLocaleDateString()
                           : "—"}
@@ -238,7 +232,7 @@ const MyModels = () => {
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           to={`/update-model/${model._id}`}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/70 text-emerald-200 text-[11px] px-3 py-1.5 hover:bg-emerald-500/10 transition-all"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/70 text-emerald-700 dark:text-emerald-200 text-[11px] px-3 py-1.5 hover:bg-emerald-500/10 transition-all"
                         >
                           <Pencil className="h-3.5 w-3.5" />
                           Update
@@ -246,7 +240,7 @@ const MyModels = () => {
                         <button
                           onClick={() => handleDelete(model._id)}
                           disabled={deletingId === model._id}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-red-500/60 text-red-300 text-[11px] px-3 py-1.5 hover:bg-red-500/10 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-red-500/70 text-red-600 dark:text-red-300 text-[11px] px-3 py-1.5 hover:bg-red-500/10 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
                         >
                           {deletingId === model._id ? (
                             <>

@@ -141,58 +141,61 @@ const Register = () => {
   const isSubmitting = localLoading || loading;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-emerald-950 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-linear-to-br from-white to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950 flex items-center justify-center px-4 py-8">
       <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left side */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="hidden md:flex flex-col gap-6 text-slate-100"
+          className="hidden md:flex flex-col gap-6 text-slate-900 dark:text-slate-100"
         >
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/40 rounded-full px-3 py-1 w-fit text-xs uppercase tracking-[0.18em]">
+          <div className="inline-flex items-center gap-2 bg-emerald-100/60 border border-emerald-300/40 dark:bg-emerald-500/10 dark:border-emerald-500/40 rounded-full px-3 py-1 w-fit text-xs uppercase tracking-[0.18em]">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             Create Account
           </div>
 
           <h1 className="text-3xl lg:text-4xl font-semibold leading-tight">
             Join{" "}
-            <span className="text-emerald-400">
-              ModelMatrix <span className="text-emerald-300">AI</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              ModelMatrix{" "}
+              <span className="text-emerald-500 dark:text-emerald-300">
+                AI
+              </span>
             </span>
           </h1>
-          <p className="text-sm text-slate-300/80 max-w-md">
+          <p className="text-sm text-slate-700 dark:text-slate-300/80 max-w-md">
             Set up your account to publish, manage, and monetize your AI models
             in one place. Track performance, manage inventory, and stay ahead of
             the curve.
           </p>
 
-          <div className="bg-slate-900/60 border border-emerald-500/25 rounded-2xl p-5 backdrop-blur-xl shadow-lg shadow-emerald-900/40">
-            <p className="text-xs uppercase text-slate-400 tracking-wide mb-3">
+          <div className="bg-white/60 dark:bg-slate-900/60 border border-emerald-300/25 dark:border-emerald-500/25 rounded-2xl p-5 backdrop-blur-xl shadow-lg shadow-emerald-300/40 dark:shadow-emerald-900/40">
+            <p className="text-xs uppercase text-slate-500 dark:text-slate-400 tracking-wide mb-3">
               Why create an account?
             </p>
-            <ul className="space-y-2 text-xs text-slate-200/90">
+            <ul className="space-y-2 text-xs text-slate-700/90 dark:text-slate-200/90">
               <li className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 Publish and organize your AI models in a clean inventory
                 interface.
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 Explore marketplace listings and track performance metrics.
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 Secure login with password rules and Google authentication.
               </li>
             </ul>
           </div>
 
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4"
+              className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200 underline underline-offset-4"
             >
               Login instead
             </Link>
@@ -204,35 +207,35 @@ const Register = () => {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-slate-950/80 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-900/50"
+          className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-300/50 dark:shadow-emerald-900/50"
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl sm:text-2xl font-semibold text-slate-100">
+              <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">
                 Create your account
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 It only takes a minute to get started.
               </p>
             </div>
             <div className="hidden sm:flex flex-col items-end text-right">
-              <p className="text-[10px] uppercase text-slate-500 tracking-[0.22em]">
+              <p className="text-[10px] uppercase text-slate-400 dark:text-slate-500 tracking-[0.22em]">
                 ModelMatrix AI
               </p>
-              <span className="text-xs text-emerald-400/90">
+              <span className="text-xs text-emerald-600/90 dark:text-emerald-400/90">
                 Inventory &amp; Marketplace
               </span>
             </div>
           </div>
 
           {error && (
-            <div className="mb-4 text-xs rounded-xl border border-red-500/50 bg-red-500/10 text-red-200 px-3 py-2">
+            <div className="mb-4 text-xs rounded-xl border border-red-400/50 bg-red-100/50 text-red-700 dark:border-red-500/50 dark:bg-red-500/10 dark:text-red-200 px-3 py-2">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="mb-4 text-xs rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-200 px-3 py-2">
+            <div className="mb-4 text-xs rounded-xl border border-emerald-400/50 bg-emerald-100/50 text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-200 px-3 py-2">
               {success}
             </div>
           )}
@@ -242,20 +245,20 @@ const Register = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="name"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Full name
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center">
-                  <User className="h-4 w-4 text-slate-500" />
+                  <User className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                 </span>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   placeholder="Your name"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   required
                 />
               </div>
@@ -265,20 +268,23 @@ const Register = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="photoURL"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
-                Photo URL <span className="text-slate-500">(optional)</span>
+                Photo URL{" "}
+                <span className="text-slate-400 dark:text-slate-500">
+                  (optional)
+                </span>
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center">
-                  <ImageIcon className="h-4 w-4 text-slate-500" />
+                  <ImageIcon className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                 </span>
                 <input
                   id="photoURL"
                   name="photoURL"
                   type="url"
                   placeholder="https://example.com/avatar.jpg"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                 />
               </div>
             </div>
@@ -287,20 +293,20 @@ const Register = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="email"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Email address
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center">
-                  <Mail className="h-4 w-4 text-slate-500" />
+                  <Mail className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                 </span>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   placeholder="you@example.com"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   autoComplete="email"
                   required
                 />
@@ -311,27 +317,27 @@ const Register = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="password"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Password
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center">
-                  <Lock className="h-4 w-4 text-slate-500" />
+                  <Lock className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                 </span>
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   autoComplete="new-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -340,7 +346,7 @@ const Register = () => {
                   )}
                 </button>
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">
+              <p className="text-[10px] text-slate-500 dark:text-slate-500 mt-1">
                 Must be at least 6 characters and include uppercase, lowercase,
                 number &amp; special character.
               </p>
@@ -350,27 +356,27 @@ const Register = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="confirmPassword"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Confirm password
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-3 flex items-center">
-                  <Lock className="h-4 w-4 text-slate-500" />
+                  <Lock className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                 </span>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type={showConfirm ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   autoComplete="new-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirm((prev) => !prev)}
-                  className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
                 >
                   {showConfirm ? (
                     <EyeOff className="h-4 w-4" />
@@ -387,15 +393,18 @@ const Register = () => {
                 type="checkbox"
                 id="terms"
                 required
-                className="mt-0.5 h-3.5 w-3.5 rounded border-slate-600/80 bg-slate-900/80 text-emerald-500 focus:ring-emerald-500"
+                className="mt-0.5 h-3.5 w-3.5 rounded border-slate-400/80 bg-white/80 dark:border-slate-600/80 dark:bg-slate-900/80 text-emerald-500 focus:ring-emerald-500"
               />
-              <label htmlFor="terms" className="text-slate-300/90">
+              <label
+                htmlFor="terms"
+                className="text-slate-600/90 dark:text-slate-300/99"
+              >
                 I agree to the{" "}
-                <span className="text-emerald-300 hover:text-emerald-200 cursor-pointer">
+                <span className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200 cursor-pointer">
                   Terms of Service
                 </span>{" "}
                 and{" "}
-                <span className="text-emerald-300 hover:text-emerald-200 cursor-pointer">
+                <span className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200 cursor-pointer">
                   Privacy Policy
                 </span>
                 .
@@ -406,7 +415,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 font-medium text-sm py-2.5 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+              className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 font-medium text-sm py-2.5 shadow-lg shadow-emerald-400/40 dark:shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
             >
               {isSubmitting ? (
                 <>
@@ -424,11 +433,11 @@ const Register = () => {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="h-px flex-1 bg-slate-800/80" />
-            <span className="text-[10px] uppercase tracking-[0.22em] text-slate-500">
+            <div className="h-px flex-1 bg-slate-200/80 dark:bg-slate-800/80" />
+            <span className="text-[10px] uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
               OR CONTINUE WITH
             </span>
-            <div className="h-px flex-1 bg-slate-800/80" />
+            <div className="h-px flex-1 bg-slate-200/80 dark:bg-slate-800/80" />
           </div>
 
           {/* Google Signup */}
@@ -436,7 +445,7 @@ const Register = () => {
             type="button"
             onClick={handleGoogleRegister}
             disabled={isSubmitting}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-700/80 bg-slate-950/60 text-slate-100 text-sm py-2.5 hover:border-emerald-400/70 hover:bg-slate-900/80 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300/80 bg-white/60 text-slate-800 dark:border-slate-700/80 dark:bg-slate-950/60 dark:text-slate-100 text-sm py-2.5 hover:border-emerald-400/70 hover:bg-slate-50/80 dark:hover:border-emerald-400/70 dark:hover:bg-slate-900/80 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <span className="h-5 w-5 rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#4285F4]">
               G
@@ -445,11 +454,11 @@ const Register = () => {
           </button>
 
           {/* Login link (for mobile) */}
-          <p className="mt-5 text-[11px] text-slate-400 text-center md:hidden">
+          <p className="mt-5 text-[11px] text-slate-500 dark:text-slate-400 text-center md:hidden">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4"
+              className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200 underline underline-offset-4"
             >
               Login instead
             </Link>
