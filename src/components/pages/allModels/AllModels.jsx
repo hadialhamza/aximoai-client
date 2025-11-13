@@ -29,20 +29,35 @@ const AllModels = () => {
   }, []);
 
   useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const { data } = await axios.get("/models");
-        console.log(data.result);
-        setModels(data?.result || []);
-      } catch (err) {
+    setLoading(true);
+    axios
+      .get("/models")
+      .then((res) => {
+        setModels(res.data.result);
+      })
+      .catch((err) => {
         console.error("Failed to fetch models:", err);
-      } finally {
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    fetchModels();
+      });
   }, [axios]);
+
+  // useEffect(() => {
+  //   const fetchModels = async () => {
+  //     try {
+  //       const { data } = await axios.get("/models");
+  //       console.log(data.result);
+  //       setModels(data?.result || []);
+  //     } catch (err) {
+  //       console.error("Failed to fetch models:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchModels();
+  // }, [axios]);
 
   // Build filter lists based on loaded models
   const frameworkOptions = useMemo(() => {
