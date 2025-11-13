@@ -217,18 +217,21 @@ const ModelDetails = () => {
                   <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                     Added On
                   </p>
-                  <p>
-                    {model.createdAt
-                      ? new Date(model.createdAt).toLocaleDateString()
-                      : "Recently"}
-                  </p>
+                  <div className="">
+                    <p className="mb-2">
+                      {model.createdAt
+                        ? new Date(model.createdAt).toLocaleDateString()
+                        : "Recently"}
+                    </p>
+                    <p>{`Total Purchase: ${model.purchased}`}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Purchase button */}
             <div className="mt-6 pt-3 border-t border-slate-200 dark:border-slate-800/70 flex items-center justify-between gap-3">
-              <div className="text-xs text-slate-600 dark:text-slate-400">
+              <div className="text-xs w-1/2 text-slate-600 dark:text-slate-400">
                 Purchase this model to move it into your{" "}
                 <span className="text-emerald-600 dark:text-emerald-300 font-medium">
                   My Purchase
