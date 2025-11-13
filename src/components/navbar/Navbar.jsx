@@ -38,7 +38,6 @@ const Navbar = () => {
         : "border-2 border-transparent text-base-content/80 hover:border-emerald-200 hover:text-emerald-700"
     }`;
 
-  // main nav links: public + private (only when user logged in)
   const navLinks = (
     <>
       <NavLink to="/" className={getLinkClass}>
@@ -66,16 +65,14 @@ const Navbar = () => {
   );
 
   return (
-    <div>
-      <div className="bg-base-200 shadow-xl sticky top-0 z-10">
+    <div className="sticky top-0 z-50">
+      <div className="bg-base-200 shadow-xl">
         <div className="px-4 lg:container lg:mx-auto">
           <div className="navbar relative">
-            {/* left: logo */}
             <div className="navbar-start w-full md:w-1/2">
               <Logo />
             </div>
 
-            {/* center: nav links (desktop) */}
             <div className="navbar-center hidden md:flex">
               <ul>
                 <li className="flex items-center font-poppins text-base-content/80">
@@ -84,9 +81,7 @@ const Navbar = () => {
               </ul>
             </div>
 
-            {/* right: theme toggle + user/login + menu button */}
             <div className="navbar-end w-auto md:w-1/2 gap-2 md:gap-3">
-              {/* theme toggle (desktop & mobile) */}
               <button
                 onClick={toggleTheme}
                 className="btn btn-ghost btn-circle border border-base-300/60 hover:border-emerald-400/70 transition-all"
@@ -99,7 +94,6 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* user avatar / login button */}
               {loading ? (
                 <div className="hidden md:block skeleton w-11 h-11 rounded-full" />
               ) : user ? (
@@ -148,13 +142,15 @@ const Navbar = () => {
                 </div>
               ) : (
                 <div className="hidden md:block">
-                  <Link to="/login" className="btn btn-primary ml-2 md:ml-4">
+                  <Link
+                    to="/login"
+                    className="btn btn-primary ml-2 md:ml-4 bg-emerald-500 border-emerald-500 text-white hover:bg-emerald-400 hover:border-emerald-400"
+                  >
                     Login
                   </Link>
                 </div>
               )}
 
-              {/* mobile menu toggle */}
               <button
                 onClick={handleSetMenu}
                 className={`md:hidden btn btn-ghost transition-transform duration-300 ${
@@ -172,7 +168,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile overlay */}
       {menuOpen && (
         <div
           className="fixed inset-0 bg-black/20 md:hidden z-20"
@@ -180,7 +175,6 @@ const Navbar = () => {
         />
       )}
 
-      {/* Mobile sidebar */}
       <div
         className={`px-4 bg-base-200 min-h-screen w-[300px] fixed top-0 ${
           menuOpen ? "left-0" : "-left-[300px]"
@@ -189,7 +183,6 @@ const Navbar = () => {
         <div className="py-4">
           <div className="flex items-center justify-between mb-5">
             <Logo />
-            {/* theme toggle in sidebar */}
             <button
               onClick={toggleTheme}
               className="btn btn-ghost btn-circle border border-base-300/60 hover:border-emerald-400/70 transition-all"
@@ -241,7 +234,10 @@ const Navbar = () => {
                   Logout
                 </Link>
               ) : (
-                <Link to="/login" className="btn btn-primary w-full">
+                <Link
+                  to="/login"
+                  className="btn btn-primary w-full bg-emerald-500 border-emerald-500 text-white hover:bg-emerald-400 hover:border-emerald-400"
+                >
                   Login
                 </Link>
               )}
