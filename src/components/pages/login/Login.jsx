@@ -1,4 +1,3 @@
-// src/pages/auth/Login.jsx
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 // eslint-disable-next-line no-unused-vars
@@ -21,7 +20,6 @@ const Login = () => {
     document.title = "Login | ModelMatrix AI";
   }, []);
 
-  // When Firebase auth finishes and user exists, redirect
   useEffect(() => {
     if (!loading && user) {
       navigate(from, { replace: true });
@@ -45,7 +43,6 @@ const Login = () => {
 
     try {
       await emailLogin(email, password);
-      // redirect happens via useEffect when user changes
     } catch (err) {
       console.error(err);
       let message = err?.message || "Failed to sign in. Please try again.";
@@ -79,64 +76,69 @@ const Login = () => {
   const isSubmitting = localLoading || loading;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-emerald-900 via-slate-950 to-slate-900 flex items-center justify-center px-4 py-8">
-      <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        {/* Left side */}
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-emerald-900 dark:via-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-8">
+      <div className="section-container w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="hidden md:flex flex-col gap-6 text-slate-100"
+          className="hidden md:flex flex-col gap-6 text-slate-900 dark:text-slate-100"
         >
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/40 rounded-full px-3 py-1 w-fit text-xs uppercase tracking-[0.18em]">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/50 rounded-full px-3 py-1 w-fit text-xs uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Secure Access
           </div>
 
           <h1 className="text-3xl lg:text-4xl font-semibold leading-tight">
             Welcome back to{" "}
-            <span className="text-emerald-400">ModelMatrix AI</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              ModelMatrix AI
+            </span>
           </h1>
-          <p className="text-sm text-slate-300/80 max-w-md">
+          <p className="text-sm text-slate-600/90 dark:text-slate-300/80 max-w-md">
             Sign in to manage your AI models, track marketplace performance, and
             explore the latest additions to your model inventory.
           </p>
 
-          <div className="bg-slate-900/60 border border-emerald-500/20 rounded-2xl p-5 backdrop-blur-xl shadow-lg shadow-emerald-900/40">
+          <div className="bg-white/90 dark:bg-slate-900/60 border border-emerald-500/20 rounded-2xl p-5 backdrop-blur-xl shadow-lg shadow-emerald-900/40">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-xs uppercase text-slate-400 tracking-wide">
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400 tracking-wide">
                   Dashboard Preview
                 </p>
-                <p className="text-sm text-slate-100 font-medium">
+                <p className="text-sm text-slate-900 dark:text-slate-100 font-medium">
                   Inventory Snapshot
                 </p>
               </div>
               <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-emerald-500/15 border border-emerald-500/40">
-                <LayoutDashboard className="h-5 w-5 text-emerald-400" />
+                <LayoutDashboard className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
               </div>
             </div>
 
             <div className="space-y-3">
-              <div className="flex justify-between text-xs text-slate-300/80">
+              <div className="flex justify-between text-xs text-slate-700 dark:text-slate-300/80">
                 <span>Active Models</span>
-                <span className="font-semibold text-emerald-400">42</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                  42
+                </span>
               </div>
-              <div className="flex justify-between text-xs text-slate-300/80">
+              <div className="flex justify-between text-xs text-slate-700 dark:text-slate-300/80">
                 <span>Marketplace Listings</span>
-                <span className="font-semibold text-emerald-400">18</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                  18
+                </span>
               </div>
-              <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div className="h-full w-2/3 bg-linear-to-r from-emerald-400 to-emerald-300" />
               </div>
             </div>
           </div>
 
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             New here?{" "}
             <Link
               to="/register"
-              className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4"
+              className="text-emerald-600 dark:text-emerald-300 hover:text-emerald-500 dark:hover:text-emerald-200 underline underline-offset-4"
             >
               Create an account instead
             </Link>
@@ -148,14 +150,14 @@ const Login = () => {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-slate-950/80 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-900/50"
+          className="bg-white/95 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/50"
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl sm:text-2xl font-semibold text-slate-100">
+              <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">
                 Login to your account
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Enter your credentials to access the dashboard.
               </p>
             </div>
@@ -163,14 +165,14 @@ const Login = () => {
               <p className="text-[10px] uppercase text-slate-500 tracking-[0.22em]">
                 ModelMatrix AI
               </p>
-              <span className="text-xs text-emerald-400/90">
+              <span className="text-xs text-emerald-600/90 dark:text-emerald-400/90">
                 Inventory &amp; Marketplace
               </span>
             </div>
           </div>
 
           {error && (
-            <div className="mb-4 text-xs rounded-xl border border-red-500/50 bg-red-500/10 text-red-200 px-3 py-2">
+            <div className="mb-4 text-xs rounded-xl border border-red-500/50 bg-red-500/10 text-red-700 dark:text-red-200 px-3 py-2">
               {error}
             </div>
           )}
@@ -180,7 +182,7 @@ const Login = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="email"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Email address
               </label>
@@ -193,7 +195,7 @@ const Login = () => {
                   name="email"
                   type="email"
                   placeholder="you@example.com"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   autoComplete="email"
                   required
                 />
@@ -204,7 +206,7 @@ const Login = () => {
             <div className="space-y-1.5">
               <label
                 htmlFor="password"
-                className="text-xs font-medium text-slate-200"
+                className="text-xs font-medium text-slate-800 dark:text-slate-200"
               >
                 Password
               </label>
@@ -217,14 +219,14 @@ const Login = () => {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full rounded-2xl bg-slate-900/80 border border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
                   autoComplete="current-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -237,16 +239,16 @@ const Login = () => {
 
             {/* Remember & Forgot */}
             <div className="flex items-center justify-between text-xs mt-1">
-              <label className="inline-flex items-center gap-2 text-slate-300/90">
+              <label className="inline-flex items-center gap-2 text-slate-700 dark:text-slate-300/90">
                 <input
                   type="checkbox"
-                  className="h-3.5 w-3.5 rounded border-slate-600/80 bg-slate-900/80 text-emerald-500 focus:ring-emerald-500"
+                  className="h-3.5 w-3.5 rounded border-slate-400 dark:border-slate-600/80 bg-white dark:bg-slate-900/80 text-emerald-500 focus:ring-emerald-500"
                 />
                 <span>Remember me</span>
               </label>
               <button
                 type="button"
-                className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4"
+                className="text-emerald-600 dark:text-emerald-300 hover:text-emerald-500 dark:hover:text-emerald-200 underline underline-offset-4"
               >
                 Forgot password?
               </button>
@@ -271,11 +273,11 @@ const Login = () => {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="h-px flex-1 bg-slate-800/80" />
+            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800/80" />
             <span className="text-[10px] uppercase tracking-[0.22em] text-slate-500">
               OR CONTINUE WITH
             </span>
-            <div className="h-px flex-1 bg-slate-800/80" />
+            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800/80" />
           </div>
 
           {/* Google login */}
@@ -283,7 +285,7 @@ const Login = () => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-700/80 bg-slate-950/60 text-slate-100 text-sm py-2.5 hover:border-emerald-400/70 hover:bg-slate-900/80 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-slate-950/60 text-slate-900 dark:text-slate-100 text-sm py-2.5 hover:border-emerald-400/70 hover:bg-emerald-50 dark:hover:bg-slate-900/80 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <span className="h-5 w-5 rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#4285F4]">
               G
@@ -292,11 +294,11 @@ const Login = () => {
           </button>
 
           {/* Register link (for mobile) */}
-          <p className="mt-5 text-[11px] text-slate-400 text-center md:hidden">
+          <p className="mt-5 text-[11px] text-slate-600 dark:text-slate-400 text-center md:hidden">
             New to ModelMatrix AI?{" "}
             <Link
               to="/register"
-              className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4"
+              className="text-emerald-600 dark:text-emerald-300 hover:text-emerald-500 dark:hover:text-emerald-200 underline underline-offset-4"
             >
               Create an account
             </Link>

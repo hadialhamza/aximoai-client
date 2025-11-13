@@ -6,7 +6,7 @@ import SocialTooltip from "../buttons/sociallink";
 const Footer = () => {
   return (
     <footer className="bg-slate-50 text-slate-800 border-t border-slate-200 dark:bg-slate-950 dark:text-slate-200 dark:border-slate-800">
-      <div className="mx-auto max-w-6xl px-4 py-10 md:px-6 lg:px-8">
+      <div className="section-container px-4 py-10 md:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-4">
           <div className="md:col-span-2 space-y-3">
             <Link to="/" className="inline-flex items-center gap-2">
