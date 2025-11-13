@@ -156,7 +156,7 @@ const SlideContent = ({ slide, isActive }) => {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
-              href="/all-models"
+              href="/models"
               className="rounded-full bg-emerald-400 px-4 py-2.5 text-xs font-semibold text-slate-950 shadow-lg shadow-emerald-500/30 transition-colors hover:bg-emerald-300 sm:px-5 sm:text-sm"
             >
               Browse Models

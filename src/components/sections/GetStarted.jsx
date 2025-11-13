@@ -1,6 +1,6 @@
 import React from "react";
 // Import from 'react-router-dom' for web projects
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const GetStarted = () => {
   return (
