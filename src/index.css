@@ -6,9 +6,9 @@
 
 @theme {
   /* Fonts */
+  --font-heading: "Orbitron", ui-sans-serif, system-ui;
   --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Arial;
-  --font-heading: "Space Grotesk", ui-sans-serif, system-ui;
-  --font-display: "Orbitron", ui-sans-serif, system-ui;
+  --font-title: "Space Grotesk", ui-sans-serif, system-ui;
 
   /* Brand Color */
   --color-primary: #10b981;
@@ -32,36 +32,6 @@
 
   /* Radius (optional) */
   --radius-xl: 1rem;
-
-  /* Animations */
-  --animate-float: float 3s ease-in-out infinite;
-  --animate-pulse-scale: pulse-scale 2s ease-in-out infinite;
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-4px);
-    }
-  }
-
-  @keyframes pulse-scale {
-
-    0%,
-    100% {
-      transform: scale(0.9);
-      opacity: 0.8;
-    }
-
-    50% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-  }
 }
 
 /* Dark overrides */
