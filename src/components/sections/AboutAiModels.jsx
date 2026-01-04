@@ -34,7 +34,7 @@ const AboutAiModels = () => {
             <p className="section-subtitle text-slate-700 dark:text-slate-300">
               In{" "}
               <span className="font-semibold text-emerald-700 dark:text-emerald-300">
-                ModelMatrix AI
+                AximoAI
               </span>
               , every model is stored with consistent metadata—framework, use
               case, dataset, creator, and created date—making discovery and
@@ -55,7 +55,7 @@ const AboutAiModels = () => {
 
               <div className="rounded-2xl border border-emerald-200 dark:border-emerald-700/70 bg-emerald-50 dark:bg-emerald-950/40 p-4 shadow-sm hover:shadow-md transition">
                 <p className="text-sm font-semibold uppercase tracking-[0.15em] text-emerald-800 dark:text-emerald-200">
-                  How ModelMatrix helps
+                  How AximoAI helps
                 </p>
                 <ul className="mt-2 space-y-1.5 text-sm text-emerald-900 dark:text-emerald-100">
                   <li>• Centralized catalog with rich metadata</li>
@@ -79,7 +79,7 @@ const AboutAiModels = () => {
               </h3>
 
               <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-                Each model entry in ModelMatrix AI contains:
+                Each model entry in AximoAI contains:
               </p>
               <ul className="mt-3 space-y-1.5 text-sm text-slate-800 dark:text-slate-200">
                 <li>• Name & short description</li>
@@ -173,7 +173,7 @@ const AboutAiModels = () => {
               Why not ad-hoc files?
             </p>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Scattered notebooks and scripts lack structure. ModelMatrix
+              Scattered notebooks and scripts lack structure. AximoAI
               centralizes metadata, improves searchability, and encourages reuse
               of proven models.
             </p>

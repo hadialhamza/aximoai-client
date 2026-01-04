@@ -1,16 +1,16 @@
 import { createBrowserRouter } from "react-router";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "@/layouts/MainLayout";
 import PrivateRoute from "./PrivateRoute";
-import ModelDetails from "../components/pages/modelDetails/ModelDetails";
-import EditModel from "../components/pages/updateModel/UpdateModel";
-import HomePage from "../components/pages/home/HomePage";
-import Login from "../components/pages/login/Login";
-import Register from "../components/pages/register/Register";
-import AllModels from "../components/pages/allModels/AllModels";
-import AddModel from "../components/pages/addModel/AddModel";
-import MyPurchase from "../components/pages/myPurchase/MyPurchase";
-import MyModels from "../components/pages/myModels/MyModels";
-import ErrorPage from "../components/pages/errorPage/ErrorPage";
+import ModelDetails from "@/pages/modelDetails/ModelDetails";
+import EditModel from "@/pages/updateModel/UpdateModel";
+import HomePage from "@/pages/home/HomePage";
+import Login from "@/pages/login/Login";
+import Register from "@/pages/register/Register";
+import AllModels from "@/pages/allModels/AllModels";
+import AddModel from "@/pages/addModel/AddModel";
+import MyPurchase from "@/pages/myPurchase/MyPurchase";
+import MyModels from "@/pages/myModels/MyModels";
+import ErrorPage from "@/pages/errorPage/ErrorPage";
 
 // create a variable for router with create browser router
 const router = createBrowserRouter([

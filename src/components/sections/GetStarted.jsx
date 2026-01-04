@@ -12,7 +12,7 @@ const GetStarted = () => {
             <h2 className="section-title">
               Get Started with{" "}
               <span className="text-emerald-600 dark:text-emerald-400">
-                ModelMatrix AI
+                AximoAI
               </span>
             </h2>
             <p className="section-subtitle">

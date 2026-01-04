@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router";
-import useAuth from "../hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import { PuffLoader } from "react-spinners";
 
 // Private route component have "children" prop by default.

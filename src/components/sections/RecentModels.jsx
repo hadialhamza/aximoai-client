@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import useAxios from "../../hooks/useAxios";
-import RecentModelCard from "../cards/RecentModelCard";
+import useAxios from "@/hooks/useAxios";
+import RecentModelCard from "@/components/ui/cards/RecentModelCard";
 
 const RecentModels = () => {
   const api = useAxios();
@@ -36,7 +36,7 @@ const RecentModels = () => {
               </span>
             </h2>
             <p className="section-subtitle text-slate-700 dark:text-slate-300">
-              Explore the latest AI models added to ModelMatrix AI. Recently
+              Explore the latest AI models added to AximoAI. Recently
               created models appear here automatically.
             </p>
           </div>
