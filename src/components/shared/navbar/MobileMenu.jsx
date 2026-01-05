@@ -1,18 +1,21 @@
 import { Link } from "react-router";
-import { User, X } from "lucide-react";
+import { LogIn, LogOut, User, X } from "lucide-react";
 import Logo from "../logo/Logo";
 import NavLinks from "./NavLinks";
+import MyBtn from "@/components/ui/buttons/MyBtn";
 
 const MobileMenu = ({ isOpen, onClose, user, logout }) => {
   return (
     <>
       {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-background/50 md:hidden min-h-screen"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={`fixed inset-0 z-40 bg-background/50 backdrop-blur-sm md:hidden min-h-screen transition-opacity duration-300 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
+      />
 
       {/* Mobile Sidebar */}
       <div
@@ -63,19 +66,19 @@ const MobileMenu = ({ isOpen, onClose, user, logout }) => {
             />
 
             {user ? (
-              <button
+              <MyBtn
                 onClick={logout}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-400 font-medium bg-red-50 dark:bg-red-900/10 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all"
+                variant="danger"
+                icon={LogOut}
+                className={"w-full"}
               >
                 Sign Out
-              </button>
+              </MyBtn>
             ) : (
-              <Link
-                to="/login"
-                onClick={onClose}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-medium hover:bg-emerald-600 shadow-lg shadow-emerald-500/25 transition-all"
-              >
-                Log In
+              <Link to="/login" onClick={onClose}>
+                <MyBtn icon={LogIn} onClick={onClose} className={"w-full"}>
+                  Log In
+                </MyBtn>
               </Link>
             )}
           </div>

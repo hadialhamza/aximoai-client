@@ -11,6 +11,7 @@ const MyPurchase = () => {
   const axiosSecure = useSecureAxios();
 
   const [purchases, setPurchases] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "My Purchases | AximoAI";
@@ -22,6 +23,7 @@ const MyPurchase = () => {
       .then((res) => {
         console.log(res.data.result);
         setPurchases(res.data?.result || []);
+        setLoading(false);
       })
       .catch((err) => {
         console.error("Failed to load purchases:", err);
@@ -30,6 +32,7 @@ const MyPurchase = () => {
           title: "Error",
           text: "Failed to load your purchased models.",
         });
+        setLoading(false);
       });
   }, [user, axiosSecure]);
 

@@ -14,6 +14,7 @@ import {
 import useAuth from "@/hooks/useAuth";
 import useSecureAxios from "@/hooks/useSecureAxios";
 import { toast } from "react-toastify";
+import MyBtn from "@/components/ui/buttons/MyBtn";
 
 const ModelDetails = () => {
   const { id } = useParams();
@@ -140,13 +141,16 @@ const ModelDetails = () => {
           <p className="text-slate-800 dark:text-slate-200 text-base">
             Model not found.
           </p>
-          <button
+          <MyBtn
+            variant="white"
             onClick={handleGoBack}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-300 dark:border-slate-700/80 px-4 py-1.5 text-sm text-slate-800 dark:text-slate-100 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200 transition-all"
+            className="rounded-full border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200"
+            size="sm"
+            icon={ArrowLeft}
+            iconPlacement="left"
           >
-            <ArrowLeft className="h-4 w-4" />
             Back to all models
-          </button>
+          </MyBtn>
         </div>
       </div>
     );
@@ -156,13 +160,16 @@ const ModelDetails = () => {
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Back button */}
-        <button
+        <MyBtn
+          variant="white"
           onClick={handleGoBack}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-300 dark:border-slate-700/80 px-4 py-1.5 text-xs text-slate-800 dark:text-slate-200 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200 transition-all mb-2"
+          className="rounded-full border-slate-300 dark:border-slate-700/80 text-xs text-slate-800 dark:text-slate-200 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200 mb-2"
+          size="sm"
+          icon={ArrowLeft}
+          iconPlacement="left"
         >
-          <ArrowLeft className="h-4 w-4" />
           Back to all models
-        </button>
+        </MyBtn>
 
         {/* Top section: image + key info */}
         <motion.div
@@ -259,32 +266,21 @@ const ModelDetails = () => {
                 </span>{" "}
                 section.
               </div>
-              <button
+              <MyBtn
                 type="button"
                 onClick={handlePurchase}
                 disabled={purchasing || isPurchased}
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs md:text-sm font-medium transition-all shadow-lg ${isPurchased
-                    ? "bg-slate-200 text-slate-500 cursor-default shadow-none dark:bg-slate-800 dark:text-slate-500"
-                    : "bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                isLoading={purchasing}
+                className={`rounded-full px-4 py-2 text-xs md:text-sm font-medium transition-all shadow-lg ${isPurchased
+                    ? "bg-slate-200 text-slate-500 cursor-default shadow-none dark:bg-slate-800 dark:text-slate-500 hover:bg-slate-200 hover:shadow-none"
+                    : "text-slate-950 shadow-emerald-900/40"
                   }`}
+                variant={isPurchased ? "ghost" : "primary"}
+                icon={ShoppingCart}
+                iconPlacement="left"
               >
-                {purchasing ? (
-                  <>
-                    <span className="h-3.5 w-3.5 border-2 border-slate-900/40 border-t-slate-900 rounded-full animate-spin" />
-                    Processing...
-                  </>
-                ) : isPurchased ? (
-                  <>
-                    <ShoppingCart className="h-4 w-4" />
-                    Already Purchased
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="h-4 w-4" />
-                    Purchase Model
-                  </>
-                )}
-              </button>
+                {isPurchased ? "Already Purchased" : "Purchase Model"}
+              </MyBtn>
             </div>
           </div>
         </motion.div>

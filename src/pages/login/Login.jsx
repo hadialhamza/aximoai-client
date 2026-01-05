@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, LayoutDashboard } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
+import MyBtn from "@/components/ui/buttons/MyBtn";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -256,20 +257,14 @@ const Login = () => {
             </div>
 
             {/* Email/password submit */}
-            <button
+            <MyBtn
               type="submit"
-              disabled={isSubmitting}
-              className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 font-medium text-sm py-2.5 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+              variant="primary"
+              isLoading={isSubmitting}
+              className="mt-2 w-full"
             >
-              {isSubmitting ? (
-                <>
-                  <span className="h-4 w-4 border-2 border-slate-900/30 border-t-slate-900 rounded-full animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                <>Sign in</>
-              )}
-            </button>
+              Sign in
+            </MyBtn>
           </form>
 
           {/* Divider */}
@@ -282,17 +277,18 @@ const Login = () => {
           </div>
 
           {/* Google login */}
-          <button
+          <MyBtn
             type="button"
+            variant="white"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-slate-950/60 text-slate-900 dark:text-slate-100 text-sm py-2.5 hover:border-emerald-400/70 hover:bg-emerald-50 dark:hover:bg-slate-900/80 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full gap-2"
           >
             <span className="h-5 w-5 rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#4285F4]">
               G
             </span>
             <span>Sign in with Google</span>
-          </button>
+          </MyBtn>
 
           {/* Register link (for mobile) */}
           <p className="mt-5 text-[11px] text-slate-600 dark:text-slate-400 text-center md:hidden">
