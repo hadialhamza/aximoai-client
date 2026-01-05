@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import {
   Cpu,

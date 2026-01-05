@@ -42,13 +42,13 @@ const Logo = () => {
             <div className="relative bg-linear-to-br from-primary/10 via-primary/5 to-transparent px-1.5 py-1">
               <span className="absolute top-0 left-0.5 w-full h-0.5 bg-linear-to-r from-primary to-transparent " />
               <span className="absolute top-0 left-0 w-0.5 h-full bg-linear-to-b from-primary to-transparent " />
-              <span className="text-xs font-title font-bold text-primary tracking-[0.0968em] block uppercase">
+              <span className="text-xs font-light text-primary tracking-wider block uppercase">
                 AI Model Inventory
               </span>
             </div>
 
             {/* Animated background on hover */}
-            <div className="absolute inset-0 bg-linear-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1s_infinite] bg-linear-to-r from-transparent via-primary/40 dark:via-white/30 to-transparent z-0" />
           </div>
         </div>
       </div>

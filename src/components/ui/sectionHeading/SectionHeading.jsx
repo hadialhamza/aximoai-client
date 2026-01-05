@@ -30,10 +30,10 @@ const SectionHeading = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/10 mb-2"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/60 bg-primary/10 mb-2"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary/40"></span>
-          <span className="text-xs font-bold text-primary tracking-[0.2em] uppercase">
+          <span className="text-xs text-primary tracking-widest uppercase">
             {badge}
           </span>
         </motion.div>
