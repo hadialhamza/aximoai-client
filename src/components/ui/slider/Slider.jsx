@@ -2,6 +2,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade, Navigation } from "swiper/modules";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router";
+import { Sparkles, Rocket, PlusSquare } from "lucide-react";
+import MyBtn from "@/components/ui/buttons/MyBtn";
+import Container from "@/components/ui/container/Container";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -87,13 +91,14 @@ const SlideContent = ({ slide, isActive }) => {
       className="space-y-4 md:space-y-6"
     >
       <motion.div variants={itemVariants}>
-        <span className="font-orbitron inline-flex items-center rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300">
+        <span className="font-heading inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+          <Sparkles className="h-3.5 w-3.5 animate-pulse" />
           AximoAI
         </span>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <h1 className="font-orbitron text-2xl font-bold leading-tight sm:text-3xl md:text-4xl lg:text-5xl">
+        <h1 className="font-heading text-2xl font-bold leading-tight sm:text-3xl md:text-4xl lg:text-5xl">
           {slide.title}
         </h1>
       </motion.div>
@@ -118,9 +123,9 @@ const SlideContent = ({ slide, isActive }) => {
               transition={{ delay: 0.45 + index * 0.1, duration: 0.45 }}
               className="flex items-center space-x-2"
             >
-              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-400/20">
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
                 <svg
-                  className="h-3 w-3 text-emerald-400"
+                  className="h-3 w-3 text-primary"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -142,7 +147,7 @@ const SlideContent = ({ slide, isActive }) => {
       <motion.div variants={itemVariants} className="pt-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
-            <div className="text-sm font-semibold text-emerald-400 sm:text-base">
+            <div className="text-sm font-semibold text-primary sm:text-base">
               {slide.stats}
             </div>
             <div className="flex items-center space-x-3 text-xs text-slate-400">
@@ -152,22 +157,20 @@ const SlideContent = ({ slide, isActive }) => {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              href="/models"
-              className="rounded-full bg-emerald-400 px-4 py-2.5 text-xs font-semibold text-slate-950 shadow-lg shadow-emerald-500/30 transition-colors hover:bg-emerald-300 sm:px-5 sm:text-sm"
-            >
-              Browse Models
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              href="/add-model"
-              className="rounded-full border border-slate-500/70 bg-slate-900/60 px-4 py-2.5 text-xs font-semibold text-slate-100 backdrop-blur-sm transition-colors hover:border-emerald-300/60 hover:bg-slate-900/80 sm:px-5 sm:text-sm"
-            >
-              Add Model
-            </motion.a>
+            <Link to="/models">
+              <MyBtn variant="primary" className="text-slate-950" icon={Rocket}>
+                Browse Models
+              </MyBtn>
+            </Link>
+            <Link to="/add-model">
+              <MyBtn
+                variant="outline"
+                className="bg-slate-900/60 text-slate-100 border-primary/80 hover:bg-slate-900/80 hover:border-primary"
+                icon={PlusSquare}
+              >
+                Add Model
+              </MyBtn>
+            </Link>
           </div>
         </div>
       </motion.div>
@@ -192,7 +195,7 @@ const Slider = () => {
           clickable: true,
           el: ".hero-pagination",
           renderBullet: (index, className) =>
-            `<span class="${className} w-2 h-2 bg-emerald-400/50 rounded-full transition-all duration-300 hover:bg-emerald-400 sm:w-3 sm:h-3"></span>`,
+            `<span class="${className} w-2 h-2 bg-primary/50 rounded-full transition-all duration-300 hover:bg-primary sm:w-3 sm:h-3"></span>`,
         }}
         navigation={{
           nextEl: ".swiper-button-next",
@@ -227,9 +230,9 @@ const Slider = () => {
                 <div className="absolute inset-0 bg-linear-to-r from-slate-950/90 via-slate-950/80 to-slate-900/30"></div>
 
                 <div className="absolute inset-0 flex items-center">
-                  <div className="section-container w-full px-8! !md:px-0">
+                  <Container>
                     <SlideContent slide={slide} isActive={isActive} />
-                  </div>
+                  </Container>
                 </div>
               </div>
             )}
@@ -237,39 +240,45 @@ const Slider = () => {
         ))}
       </Swiper>
 
-      <div className="md:ml-10! swiper-button-prev absolute left-2 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-slate-900/60 p-2 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 after:hidden sm:left-4 sm:p-3">
-        <svg
-          className="h-4 w-4 text-emerald-400 sm:h-5 sm:w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+      {/* Navigation Buttons in Container */}
+      <div className="absolute bottom-10 left-0 right-0 z-10 pointer-events-none">
+        <Container className="flex items-center justify-between">
+          <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+            <svg
+              className="h-4 w-4 sm:h-5 sm:w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </div>
+
+          <div className="swiper-button-next static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+            <svg
+              className="h-4 w-4 sm:h-5 sm:w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
+        </Container>
       </div>
 
-      <div className="md:mr-10! swiper-button-next absolute right-2 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-slate-900/60 p-2 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 after:hidden sm:right-4 sm:p-3">
-        <svg
-          className="h-4 w-4 text-emerald-400 sm:h-5 sm:w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </div>
-
-      <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 transform sm:bottom-4">
+      {/* Pagination - Center Bottom (Adjusted slightly up to not conflict spacing) */}
+      <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform sm:bottom-12">
         <div className="flex space-x-2 rounded-full bg-slate-900/60 px-3 py-2 backdrop-blur-sm sm:space-x-3 sm:px-4">
           <div className="hero-pagination" />
         </div>
