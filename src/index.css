@@ -20,6 +20,10 @@
   --color-base-300: #e5e7eb;
   --color-base-content: #0f172a;
 
+  /* Aliases */
+  --color-background: var(--color-base-200);
+  --color-foreground: var(--color-base-content);
+
   /* Muted text + borders */
   --color-muted: #64748b;
   --color-border: #e2e8f0;
@@ -36,12 +40,17 @@
 
 /* Dark overrides */
 [data-theme="dark"] {
+  --color-primary: #34d399;
   --color-base-100: #0b1220;
   --color-base-200: #070c16;
   --color-base-300: #0f1a2e;
   --color-base-content: #e5e7eb;
   --color-muted: #94a3b8;
   --color-border: #172554;
+
+  /* Aliases (optional, but good for explicit overrides) */
+  --color-background: var(--color-base-200);
+  --color-foreground: var(--color-base-content);
 }
 
 @layer base {
