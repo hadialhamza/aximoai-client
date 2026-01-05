@@ -3,6 +3,7 @@ import { cn } from "@/utils/cn";
 
 const SectionHeading = ({
   badge,
+  icon: Icon,
   title,
   description,
   align = "center",
@@ -32,7 +33,11 @@ const SectionHeading = ({
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/60 bg-primary/10 mb-2"
         >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary/40"></span>
+          {Icon ? (
+            <Icon className="w-3.5 h-3.5 text-primary" />
+          ) : (
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary/40"></span>
+          )}
           <span className="text-xs text-primary tracking-widest uppercase">
             {badge}
           </span>

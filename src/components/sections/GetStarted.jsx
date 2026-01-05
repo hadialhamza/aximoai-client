@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import { UserPlus, LogIn } from "lucide-react";
+import { UserPlus, LogIn, Rocket } from "lucide-react";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import MyBtn from "@/components/ui/buttons/MyBtn";
@@ -14,6 +14,7 @@ const GetStarted = () => {
             <div className="lg:w-2/3">
               <SectionHeading
                 badge="Get Started"
+                icon={Rocket}
                 title={
                   <>
                     Get Started with{" "}

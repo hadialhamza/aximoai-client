@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import { Rocket } from "lucide-react";
+import { Rocket, BrainCircuit } from "lucide-react";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import MyBtn from "@/components/ui/buttons/MyBtn";
@@ -12,6 +12,7 @@ const AboutAiModels = () => {
         <div className="bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 shadow-[0_1px_15px_rgba(0,0,0,0.15)] p-5 md:p-6 lg:p-8 rounded-2xl">
           <SectionHeading
             badge="About AI Models"
+            icon={BrainCircuit}
             title={
               <span>
                 About <span className="text-primary">AI Models</span>

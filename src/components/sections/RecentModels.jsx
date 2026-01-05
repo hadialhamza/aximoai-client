@@ -5,7 +5,7 @@ import RecentModelCard from "@/components/ui/cards/RecentModelCard";
 import Container from "../ui/container/Container";
 import MyBtn from "../ui/buttons/MyBtn";
 import SectionHeading from "../ui/sectionHeading/SectionHeading";
-import { Box } from "lucide-react";
+import { Box, Sparkles } from "lucide-react";
 
 const RecentModels = () => {
   const api = useAxios();
@@ -31,6 +31,7 @@ const RecentModels = () => {
         <div className="bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 rounded-2xl shadow-[0_1px_15px_rgba(0,0,0,0.15)] p-5 md:p-6 lg:p-8">
           <SectionHeading
             badge="Latest Models"
+            icon={Sparkles}
             title={
               <span>
                 Latest <span className="text-primary">AI Models</span>

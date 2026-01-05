@@ -9,9 +9,13 @@ import {
   Database,
   Search,
   ArrowUpDown,
+  Plus,
 } from "lucide-react";
 import { Link } from "react-router";
 import useSecureAxios from "../../hooks/useSecureAxios";
+import Container from "@/components/ui/container/Container";
+import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import MyBtn from "@/components/ui/buttons/MyBtn";
 
 const AllModels = () => {
   const axios = useSecureAxios();
@@ -114,46 +118,36 @@ const AllModels = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+      <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
-              <Cpu className="h-3 w-3" />
-              Model Inventory
-            </div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
-              Browse all{" "}
-              <span className="text-emerald-600 dark:text-emerald-400">
-                AI models
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <SectionHeading
+            badge="Model Inventory"
+            icon={Cpu}
+            title={
+              <span>
+                Browse all <span className="text-primary">AI models</span>
               </span>
-            </h1>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-              Search, filter, and sort AI models by framework, use case, and
-              dataset to find exactly what you need.
-            </p>
-          </div>
+            }
+            description="Search, filter, and sort AI models by framework, use case, and dataset to find exactly what you need."
+            align="left"
+            className="items-start text-left mx-0"
+          />
 
-          <Link
-            to="/add-model"
-            className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 text-sm font-medium px-5 py-2.5 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 transition-all"
-          >
-            + Add Model
+          <Link to="/add-model">
+            <MyBtn variant="primary" icon={Plus}>
+              Add Model
+            </MyBtn>
           </Link>
-        </motion.div>
+        </div>
 
         {/* Controls: search + filters */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.05 }}
-          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-5 shadow-xl dark:shadow-xl dark:shadow-emerald-900/20 backdrop-blur"
+          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-5 shadow-xl dark:shadow-xl dark:shadow-primary/20 backdrop-blur"
         >
           <div className="grid md:grid-cols-4 gap-3">
             {/* Search */}
@@ -170,7 +164,7 @@ const AllModels = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   type="text"
                   placeholder="Search by name, framework, use case, dataset..."
-                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
                 />
               </div>
             </div>
@@ -187,7 +181,7 @@ const AllModels = () => {
                 <select
                   value={frameworkFilter}
                   onChange={(e) => setFrameworkFilter(e.target.value)}
-                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 appearance-none"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 appearance-none"
                 >
                   <option value="all">All frameworks</option>
                   {frameworkOptions.map((fw) => (
@@ -214,7 +208,7 @@ const AllModels = () => {
                 <select
                   value={useCaseFilter}
                   onChange={(e) => setUseCaseFilter(e.target.value)}
-                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 appearance-none"
+                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 appearance-none"
                 >
                   <option value="all">All use cases</option>
                   {useCaseOptions.map((uc) => (
@@ -236,7 +230,7 @@ const AllModels = () => {
               <Database className="h-3.5 w-3.5" />
               <span>
                 Showing{" "}
-                <span className="text-emerald-600 dark:text-emerald-300 font-semibold">
+                <span className="text-primary dark:text-primary font-semibold">
                   {filteredModels.length}
                 </span>{" "}
                 of{" "}
@@ -255,7 +249,7 @@ const AllModels = () => {
                 <select
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
-                  className="rounded-full bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 appearance-none"
+                  className="rounded-full bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-9 pr-8 py-2 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 appearance-none"
                 >
                   <option value="newest">Sort: Newest</option>
                   <option value="oldest">Sort: Oldest</option>
@@ -267,7 +261,7 @@ const AllModels = () => {
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 dark:border-slate-700/80 px-3 py-1.5 text-[11px] text-slate-700 dark:text-slate-200 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200 transition-all"
+                className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 dark:border-slate-700/80 px-3 py-1.5 text-[11px] text-slate-700 dark:text-slate-200 hover:border-primary/70 hover:text-primary dark:hover:text-primary transition-all"
               >
                 Clear
               </button>
@@ -279,7 +273,7 @@ const AllModels = () => {
         {loading ? (
           <div className="min-h-[40vh] flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
-              <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
+              <span className="h-8 w-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
               <p className="text-sm text-slate-700 dark:text-slate-300">
                 Loading models...
               </p>
@@ -291,12 +285,13 @@ const AllModels = () => {
               <p className="text-sm text-slate-700 dark:text-slate-300">
                 No models matched your filters.
               </p>
-              <button
+              <MyBtn
+                variant="outline"
                 onClick={handleClearFilters}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 px-4 py-1.5 text-xs text-slate-800 dark:text-slate-100 hover:border-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-200 transition-all"
+                className="text-xs h-8"
               >
                 Reset filters
-              </button>
+              </MyBtn>
             </div>
           </div>
         ) : (
@@ -304,12 +299,12 @@ const AllModels = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.08 }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8"
           >
             {filteredModels.map((model) => (
               <div
                 key={model._id}
-                className="group bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-md dark:shadow-lg dark:shadow-emerald-900/20 hover:border-emerald-400/60 hover:shadow-lg hover:shadow-emerald-900/40 transition-all flex flex-col"
+                className="group bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-md dark:shadow-lg dark:shadow-primary/20 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/40 transition-all flex flex-col"
               >
                 <div className="relative h-40 overflow-hidden">
                   <img
@@ -333,19 +328,19 @@ const AllModels = () => {
 
                   <div className="space-y-1.5 text-[11px] text-slate-600 dark:text-slate-300">
                     <div className="flex items-center gap-1.5">
-                      <Layers className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <Layers className="h-3.5 w-3.5 text-primary" />
                       <span className="truncate">
                         {model.framework || "Unknown framework"}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <ListTree className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <ListTree className="h-3.5 w-3.5 text-primary" />
                       <span className="truncate">
                         {model.useCase || "General use case"}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Database className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <Database className="h-3.5 w-3.5 text-primary" />
                       <span className="truncate">
                         {model.dataset || "Dataset not specified"}
                       </span>
@@ -365,7 +360,7 @@ const AllModels = () => {
                     </span>
                     <Link
                       to={`/models/${model._id}`}
-                      className="inline-flex items-center gap-1 text-emerald-600 hover:text-emerald-500 dark:text-emerald-300 dark:hover:text-emerald-200"
+                      className="inline-flex items-center gap-1 text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80"
                     >
                       View details →
                     </Link>
@@ -375,7 +370,7 @@ const AllModels = () => {
             ))}
           </motion.div>
         )}
-      </div>
+      </Container>
     </div>
   );
 };
