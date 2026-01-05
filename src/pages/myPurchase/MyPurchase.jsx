@@ -5,6 +5,10 @@ import { Cpu, Layers, ListTree, UserCircle2, ShoppingBag } from "lucide-react";
 import Swal from "sweetalert2";
 import useAuth from "@/hooks/useAuth";
 import useSecureAxios from "@/hooks/useSecureAxios";
+import Container from "@/components/ui/container/Container";
+import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import MyBtn from "@/components/ui/buttons/MyBtn";
+import MyPurchaseSkeleton from "@/components/skeletons/MyPurchaseSkeleton";
 
 const MyPurchase = () => {
   const { user } = useAuth();
@@ -37,55 +41,37 @@ const MyPurchase = () => {
   }, [user, axiosSecure]);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+      <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
-              <ShoppingBag className="h-3 w-3" />
-              My Purchases
-            </div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
+        <SectionHeading
+          badge="My Purchases"
+          icon={ShoppingBag}
+          title={
+            <span>
               Models you&apos;ve{" "}
-              <span className="text-emerald-600 dark:text-emerald-400">
-                added to your toolkit
-              </span>
-            </h1>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-              Browse all AI models you have purchased on AximoAI and jump back
-              into their details anytime.
-            </p>
-          </div>
-        </motion.div>
+              <span className="text-primary">added to your toolkit</span>
+            </span>
+          }
+          description="Browse all AI models you have purchased on AximoAI and jump back into their details anytime."
+          align="left"
+          className="md:mx-0 items-start mx-0 mb-10"
+        />
 
         {/* Content */}
         {loading ? (
-          <div className="min-h-[40vh] flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3">
-              <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Loading your purchased models...
-              </p>
-            </div>
-          </div>
+          <MyPurchaseSkeleton />
         ) : purchases.length === 0 ? (
           <div className="min-h-[40vh] flex items-center justify-center">
-            <div className="text-center space-y-3">
-              <p className="text-base text-slate-800 dark:text-slate-200">
+            <div className="text-center space-y-4">
+              <p className="text-lg text-slate-800 dark:text-slate-200 font-medium">
                 You haven&apos;t purchased any models yet.
               </p>
-              <Link
-                to="/all-models"
-                className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 text-sm font-medium px-4 py-2 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 transition-all"
-              >
-                <Cpu className="h-4 w-4" />
-                Browse models
+              <Link to="/models">
+                <MyBtn className="shadow-lg shadow-primary/25 gap-2">
+                  <Cpu className="h-4 w-4" />
+                  Browse models
+                </MyBtn>
               </Link>
             </div>
           </div>
@@ -110,7 +96,7 @@ const MyPurchase = () => {
               return (
                 <div
                   key={purchase._id}
-                  className="group bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-md dark:shadow-lg dark:shadow-emerald-900/20 hover:border-emerald-400/60 hover:shadow-lg hover:shadow-emerald-900/40 transition-all flex flex-col"
+                  className="group bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-md dark:shadow-lg dark:shadow-emerald-900/20 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 transition-all flex flex-col"
                 >
                   {/* Image */}
                   <div className="relative h-40 overflow-hidden">
@@ -138,20 +124,20 @@ const MyPurchase = () => {
 
                     <div className="space-y-1.5 text-[11px] text-slate-700 dark:text-slate-300">
                       <div className="flex items-center gap-1.5">
-                        <Layers className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <Layers className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate">
                           {framework || "Unknown framework"}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <ListTree className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <ListTree className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate">{useCase}</span>
                       </div>
                     </div>
 
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-800/70 space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
                       <div className="flex items-center gap-1.5">
-                        <UserCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <UserCircle2 className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate">
                           <span className="text-slate-800 dark:text-slate-300">
                             Created by:
@@ -171,7 +157,7 @@ const MyPurchase = () => {
                     </div>
 
                     {/* View details */}
-                    <div className="pt-2 flex justify-between items-center">
+                    <div className="pt-2 flex justify-between items-center mt-auto">
                       <span className="text-[10px] text-slate-500 dark:text-slate-500">
                         ID:{" "}
                         <span className="text-slate-700 dark:text-slate-400">
@@ -180,11 +166,13 @@ const MyPurchase = () => {
                       </span>
 
                       {modelId ? (
-                        <Link
-                          to={`/models/${modelId}`}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 border border-emerald-500/70 px-3 py-1.5 text-[11px] text-emerald-200 hover:bg-emerald-500/10 transition-all"
-                        >
-                          View Details →
+                        <Link to={`/models/${modelId}`}>
+                          <MyBtn
+                            variant="outline"
+                            className="h-auto py-1.5 px-3 text-[11px] border-emerald-500/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500"
+                          >
+                            View Details →
+                          </MyBtn>
                         </Link>
                       ) : (
                         <span className="text-[11px] text-slate-500">
@@ -198,7 +186,7 @@ const MyPurchase = () => {
             })}
           </motion.div>
         )}
-      </div>
+      </Container>
     </div>
   );
 };

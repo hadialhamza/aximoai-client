@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { Cpu, Layers, ListTree, Database, Trash2, Pencil } from "lucide-react";
 import Swal from "sweetalert2";
 import useAuth from "@/hooks/useAuth";
 import useSecureAxios from "@/hooks/useSecureAxios";
+import Container from "@/components/ui/container/Container";
+import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import MyBtn from "@/components/ui/buttons/MyBtn";
+import MyModelsSkeleton from "@/components/skeletons/MyModelsSkeleton";
 
 const MyModels = () => {
   const { user } = useAuth();
@@ -77,61 +80,44 @@ const MyModels = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+      <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
-              <Cpu className="h-3 w-3" />
-              My Models
-            </div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
-              Manage your{" "}
-              <span className="text-emerald-600 dark:text-emerald-400">
-                published models
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <SectionHeading
+            badge="My Models"
+            icon={Cpu}
+            title={
+              <span>
+                Manage your{" "}
+                <span className="text-primary">published models</span>
               </span>
-            </h1>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-              View, update, or delete the AI models you have added to
-              AximoAI.
-            </p>
-          </div>
+            }
+            description="View, update, or delete the AI models you have added to AximoAI."
+            align="left"
+            className="md:mx-0 items-start mx-0 mb-0"
+          />
 
-          <Link
-            to="/add-model"
-            className="inline-flex items-center justify-center rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 text-sm font-medium px-5 py-2.5 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 transition-all"
-          >
-            + Add New Model
+          <Link to="/add-model">
+            <MyBtn className="shadow-lg shadow-primary/25">
+              + Add New Model
+            </MyBtn>
           </Link>
-        </motion.div>
+        </div>
 
         {/* Content */}
         {loading ? (
-          <div className="min-h-[40vh] flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3">
-              <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Loading your models...
-              </p>
-            </div>
-          </div>
+          <MyModelsSkeleton />
         ) : models.length === 0 ? (
           <div className="min-h-[40vh] flex items-center justify-center">
-            <div className="text-center space-y-3">
-              <p className="text-base text-slate-800 dark:text-slate-200">
+            <div className="text-center space-y-4">
+              <p className="text-lg text-slate-800 dark:text-slate-200 font-medium">
                 You haven&apos;t added any models yet.
               </p>
-              <Link
-                to="/add-model"
-                className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 text-sm font-medium px-4 py-2 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 transition-all"
-              >
-                + Add your first model
+              <Link to="/add-model">
+                <MyBtn className="shadow-lg shadow-primary/25">
+                  + Add your first model
+                </MyBtn>
               </Link>
             </div>
           </div>
@@ -140,7 +126,7 @@ const MyModels = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-6 shadow-xl dark:shadow-xl dark:shadow-emerald-900/25 overflow-x-auto"
+            className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-6 shadow-xl dark:shadow-emerald-900/25 overflow-x-auto"
           >
             <table className="min-w-full text-sm text-left align-middle">
               <thead>
@@ -157,11 +143,11 @@ const MyModels = () => {
                   <th className="py-3 text-right font-medium">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-slate-200/80 dark:divide-slate-800/60">
                 {models.map((model) => (
                   <tr
                     key={model._id}
-                    className="border-b border-slate-200/80 dark:border-slate-800/60 last:border-none hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-colors"
+                    className="hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-colors"
                   >
                     {/* Model name + tiny description */}
                     <td className="py-3 pr-3">
@@ -191,7 +177,7 @@ const MyModels = () => {
                     {/* Framework */}
                     <td className="py-3 pr-3 align-top">
                       <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                        <Layers className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <Layers className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate max-w-[120px] md:max-w-40">
                           {model.framework || "—"}
                         </span>
@@ -201,7 +187,7 @@ const MyModels = () => {
                     {/* Use case */}
                     <td className="py-3 pr-3 align-top">
                       <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                        <ListTree className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <ListTree className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate max-w-[150px] md:max-w-[200px]">
                           {model.useCase || "—"}
                         </span>
@@ -211,7 +197,7 @@ const MyModels = () => {
                     {/* Dataset */}
                     <td className="py-3 pr-3 align-top hidden md:table-cell">
                       <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                        <Database className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <Database className="h-3.5 w-3.5 text-primary" />
                         <span className="truncate max-w-[180px]">
                           {model.dataset || "—"}
                         </span>
@@ -230,17 +216,20 @@ const MyModels = () => {
                     {/* Actions */}
                     <td className="py-3 pl-3 align-top text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <Link
-                          to={`/update-model/${model._id}`}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/70 text-emerald-700 dark:text-emerald-200 text-[11px] px-3 py-1.5 hover:bg-emerald-500/10 transition-all"
-                        >
-                          <Pencil className="h-3.5 w-3.5" />
-                          Update
+                        <Link to={`/update-model/${model._id}`}>
+                          <MyBtn
+                            variant="outline"
+                            className="h-auto px-3 py-1.5 text-[11px] gap-1.5 border-primary/50 text-primary hover:bg-primary/10"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                            Update
+                          </MyBtn>
                         </Link>
-                        <button
+                        <MyBtn
+                          variant="outline"
                           onClick={() => handleDelete(model._id)}
                           disabled={deletingId === model._id}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-red-500/70 text-red-600 dark:text-red-300 text-[11px] px-3 py-1.5 hover:bg-red-500/10 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                          className="h-auto px-3 py-1.5 text-[11px] gap-1.5 border-red-500/50 text-red-600 dark:text-red-400 hover:bg-red-500/10 hover:border-red-500"
                         >
                           {deletingId === model._id ? (
                             <>
@@ -253,7 +242,7 @@ const MyModels = () => {
                               Delete
                             </>
                           )}
-                        </button>
+                        </MyBtn>
                       </div>
                     </td>
                   </tr>
@@ -262,7 +251,7 @@ const MyModels = () => {
             </table>
           </motion.div>
         )}
-      </div>
+      </Container>
     </div>
   );
 };
