@@ -99,7 +99,7 @@ const AddModel = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="max-w-3xl mx-auto bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-primary/10 backdrop-blur"
+          className="max-w-3xl mx-auto bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-primary/10"
         >
           <form onSubmit={handleAddModel} className="space-y-5">
             <div className="grid md:grid-cols-2 gap-4">

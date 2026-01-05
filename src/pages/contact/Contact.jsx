@@ -70,7 +70,7 @@ const Contact = () => {
         >
           {/* Left Column: Contact Info */}
           <motion.div variants={item} className="space-y-8">
-            <div className="bg-white/80 dark:bg-slate-950/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-8 shadow-lg dark:shadow-emerald-900/10">
+            <div className="bg-white/80 dark:bg-slate-950/60 border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-8 shadow-lg dark:shadow-emerald-900/10">
               <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">
                 Get in touch
               </h3>
@@ -144,7 +144,7 @@ const Contact = () => {
 
           {/* Right Column: Contact Form */}
           <motion.div variants={item}>
-            <div className="bg-white/95 dark:bg-slate-950/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl dark:shadow-emerald-900/20">
+            <div className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl dark:shadow-emerald-900/20">
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <Input label="First Name" placeholder="John" required />

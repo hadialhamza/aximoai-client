@@ -5,7 +5,7 @@ import Logo from "@/components/shared/logo/Logo";
 
 const PageLoader = ({ message = "Loading..." }) => {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md transition-colors duration-300">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50/90 dark:bg-slate-950/90 transition-colors duration-300">
       {/* Absolute Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[20%] left-[20%] w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-20 animate-pulse" />
@@ -42,7 +42,7 @@ const PageLoader = ({ message = "Loading..." }) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative z-10 p-6 bg-white/50 dark:bg-slate-900/50 rounded-full backdrop-blur-sm shadow-xl dark:shadow-primary/5 ring-1 ring-slate-200 dark:ring-slate-800"
+            className="relative z-10 p-6 bg-white/50 dark:bg-slate-900/50 rounded-full shadow-xl dark:shadow-primary/5 ring-1 ring-slate-200 dark:ring-slate-800"
           >
             <div className="pointer-events-none scale-110">
               <Logo />

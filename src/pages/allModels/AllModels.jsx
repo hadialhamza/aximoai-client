@@ -148,7 +148,7 @@ const AllModels = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.05 }}
-          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-5 shadow-xl dark:shadow-xl dark:shadow-primary/20 backdrop-blur"
+          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-4 md:p-5 shadow-xl dark:shadow-xl dark:shadow-primary/20"
         >
           <div className="grid md:grid-cols-4 gap-3">
             {/* Search */}

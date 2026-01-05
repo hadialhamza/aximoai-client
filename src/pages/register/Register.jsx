@@ -178,7 +178,7 @@ const Register = () => {
             </div>
 
             {/* Community Snapshot */}
-            <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20 rounded-2xl p-5 backdrop-blur-sm">
+            <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20 rounded-2xl p-5">
               <p className="text-xs uppercase text-primary dark:text-primary/90 tracking-wide mb-3 font-semibold">
                 Community Snapshot
               </p>

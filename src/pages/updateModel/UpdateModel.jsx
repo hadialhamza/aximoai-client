@@ -179,7 +179,7 @@ const UpdateModel = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="max-w-4xl mx-auto bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/30 backdrop-blur-md"
+          className="max-w-4xl mx-auto bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/30"
         >
           <form onSubmit={handleUpdate} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">

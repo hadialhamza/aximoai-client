@@ -52,7 +52,7 @@ const ErrorPage = () => {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-2xl w-full bg-white/80 dark:bg-slate-950/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-8 md:p-12 shadow-2xl dark:shadow-emerald-900/20 text-center relative z-10"
+        className="max-w-2xl w-full bg-white/80 dark:bg-slate-950/60 border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-8 md:p-12 shadow-2xl dark:shadow-emerald-900/20 text-center relative z-10"
       >
         <motion.div
           variants={item}

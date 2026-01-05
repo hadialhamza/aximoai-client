@@ -9,7 +9,7 @@ const MobileMenu = ({ isOpen, onClose, user, logout }) => {
     <>
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-background/50 backdrop-blur-sm md:hidden min-h-screen transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-background/50 md:hidden min-h-screen transition-opacity duration-300 ${
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"

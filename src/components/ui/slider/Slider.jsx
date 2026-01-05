@@ -243,7 +243,7 @@ const Slider = () => {
       {/* Navigation Buttons in Container */}
       <div className="absolute bottom-10 left-0 right-0 z-10 pointer-events-none">
         <Container className="flex items-center justify-between">
-          <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+          <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
             <svg
               className="h-4 w-4 sm:h-5 sm:w-5"
               fill="none"
@@ -259,7 +259,7 @@ const Slider = () => {
             </svg>
           </div>
 
-          <div className="swiper-button-next static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+          <div className="swiper-button-next static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
             <svg
               className="h-4 w-4 sm:h-5 sm:w-5"
               fill="none"
@@ -279,7 +279,7 @@ const Slider = () => {
 
       {/* Pagination - Center Bottom */}
       <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform sm:bottom-12">
-        <div className="rounded-full bg-slate-900/60 px-3 py-2 backdrop-blur-sm sm:px-4">
+        <div className="rounded-full bg-slate-900/60 px-3 py-2 sm:px-4">
           <div className="hero-pagination flex items-center justify-center gap-2" />
         </div>
       </div>
