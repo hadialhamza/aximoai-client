@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import {
   Cpu,
@@ -9,9 +8,16 @@ import {
   Database,
   FileText,
   Image as ImageIcon,
+  Save,
+  Edit,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import useSecureAxios from "@/hooks/useSecureAxios";
+import Container from "@/components/ui/container/Container";
+import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import MyBtn from "@/components/ui/buttons/MyBtn";
+import Input from "@/components/ui/input/Input";
+import UpdateModelSkeleton from "@/components/skeletons/UpdateModelSkeleton";
 
 const UpdateModel = () => {
   const { id } = useParams();
@@ -33,7 +39,6 @@ const UpdateModel = () => {
     document.title = "Update Model | AximoAI";
   }, []);
 
-  // Fetch current model details
   useEffect(() => {
     const fetchModel = async () => {
       try {
@@ -110,7 +115,6 @@ const UpdateModel = () => {
     };
 
     try {
-      // 🔧 change to .patch if your backend uses PATCH instead of PUT
       const { data } = await axiosSecure.put(`/models/${id}`, updatedModel);
       console.log("update response:", data);
 
@@ -146,228 +150,117 @@ const UpdateModel = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <span className="h-8 w-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            Loading model details...
-          </p>
-        </div>
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <UpdateModelSkeleton />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 px-4">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/60 text-[11px] uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200 mb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Edit Model
-          </div>
-          <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-slate-50">
-            Update your{" "}
-            <span className="text-emerald-600 dark:text-emerald-400">
-              AximoAI
-            </span>{" "}
-            entry
-          </h1>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Adjust the details of your AI model. Changes will be reflected on
-            the details page and in the public catalog.
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-        {/* Form card */}
+      <Container className="relative z-10">
+        <SectionHeading
+          badge="Edit Model"
+          icon={Edit}
+          title={
+            <span>
+              Update your <span className="text-primary">AximoAI</span> entry
+            </span>
+          }
+          description="Adjust the details of your AI model. Changes will be reflected on the details page and in the public catalog."
+          className="mb-8"
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/30 backdrop-blur"
+          className="max-w-4xl mx-auto bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-xl dark:shadow-2xl dark:shadow-emerald-900/30 backdrop-blur-md"
         >
-          <form onSubmit={handleUpdate} className="space-y-5">
-            {/* Row 1: Name + Framework */}
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Name */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="name"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Model Name
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Cpu className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={model.name}
-                    onChange={handleChange}
-                    placeholder="e.g. VisionX-Classifier"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Framework */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="framework"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Framework
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Layers className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="framework"
-                    name="framework"
-                    type="text"
-                    value={model.framework}
-                    onChange={handleChange}
-                    placeholder="e.g. TensorFlow, PyTorch"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
-                    required
-                  />
-                </div>
-              </div>
+          <form onSubmit={handleUpdate} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input
+                label="Model Name"
+                name="name"
+                value={model.name}
+                onChange={handleChange}
+                placeholder="e.g. VisionX-Classifier"
+                icon={Cpu}
+                required
+              />
+              <Input
+                label="Framework"
+                name="framework"
+                value={model.framework}
+                onChange={handleChange}
+                placeholder="e.g. TensorFlow, PyTorch"
+                icon={Layers}
+                required
+              />
             </div>
 
-            {/* Row 2: Use case + Dataset */}
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Use Case */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="useCase"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Use Case
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <ListTree className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="useCase"
-                    name="useCase"
-                    type="text"
-                    value={model.useCase}
-                    onChange={handleChange}
-                    placeholder="e.g. Image classification for medical scans"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Dataset */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="dataset"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Dataset
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Database className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="dataset"
-                    name="dataset"
-                    type="text"
-                    value={model.dataset}
-                    onChange={handleChange}
-                    placeholder="e.g. custom hospital dataset"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
-                    required
-                  />
-                </div>
-              </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Input
+                label="Use Case"
+                name="useCase"
+                value={model.useCase}
+                onChange={handleChange}
+                placeholder="e.g. Image classification"
+                icon={ListTree}
+                required
+              />
+              <Input
+                label="Dataset"
+                name="dataset"
+                value={model.dataset}
+                onChange={handleChange}
+                placeholder="e.g. Custom hospital dataset"
+                icon={Database}
+                required
+              />
             </div>
 
-            {/* Image URL */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="image"
-                className="text-xs font-medium text-slate-800 dark:text-slate-200"
-              >
-                Image URL
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-3 flex items-center">
-                  <ImageIcon className="h-4 w-4 text-slate-500" />
-                </span>
-                <input
-                  id="image"
-                  name="image"
-                  type="url"
-                  value={model.image}
-                  onChange={handleChange}
-                  placeholder="https://example.com/model-cover.png"
-                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all"
-                  required
-                />
-              </div>
-            </div>
+            <Input
+              label="Image URL"
+              name="image"
+              type="url"
+              value={model.image}
+              onChange={handleChange}
+              placeholder="https://example.com/model-cover.png"
+              icon={ImageIcon}
+              required
+            />
 
-            {/* Description */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="description"
-                className="text-xs font-medium text-slate-800 dark:text-slate-200"
-              >
-                Description
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-3">
-                  <FileText className="h-4 w-4 text-slate-500" />
-                </span>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows={4}
-                  value={model.description}
-                  onChange={handleChange}
-                  placeholder="Describe what this model does, its architecture, and any important notes for potential users."
-                  className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500/80 transition-all resize-none"
-                  required
-                />
-              </div>
-            </div>
+            <Input
+              label="Description"
+              name="description"
+              value={model.description}
+              onChange={handleChange}
+              placeholder="Describe what this model does..."
+              multiline
+              rows={4}
+              icon={FileText}
+              required
+            />
 
-            {/* Submit */}
-            <div className="pt-2 flex justify-end">
-              <button
+            <div className="pt-4 flex justify-end">
+              <MyBtn
                 type="submit"
                 disabled={saving}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-emerald-500 to-emerald-400 text-slate-950 text-sm font-medium px-6 py-2.5 shadow-lg shadow-emerald-900/40 hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                isLoading={saving}
+                className="w-full sm:w-auto min-w-40 justify-center shadow-lg shadow-emerald-500/20"
               >
-                {saving ? (
-                  <>
-                    <span className="h-4 w-4 border-2 border-slate-900/40 border-t-slate-900 rounded-full animate-spin" />
-                    Updating...
-                  </>
-                ) : (
-                  <>Save Changes</>
-                )}
-              </button>
+                <Save className="h-4 w-4 mr-2" />
+                Save Changes
+              </MyBtn>
             </div>
           </form>
         </motion.div>
-      </div>
+      </Container>
     </div>
   );
 };
