@@ -16,6 +16,7 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import MyBtn from "@/components/ui/buttons/MyBtn";
+import AllModelsSkeleton from "@/components/skeletons/AllModelsSkeleton";
 
 const AllModels = () => {
   const axios = useSecureAxios();
@@ -271,14 +272,7 @@ const AllModels = () => {
 
         {/* Models grid */}
         {loading ? (
-          <div className="min-h-[40vh] flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3">
-              <span className="h-8 w-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-              <p className="text-sm text-slate-700 dark:text-slate-300">
-                Loading models...
-              </p>
-            </div>
-          </div>
+          <AllModelsSkeleton />
         ) : filteredModels.length === 0 ? (
           <div className="min-h-[40vh] flex items-center justify-center">
             <div className="text-center space-y-2">
