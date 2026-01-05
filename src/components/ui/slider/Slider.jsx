@@ -195,7 +195,7 @@ const Slider = () => {
           clickable: true,
           el: ".hero-pagination",
           renderBullet: (index, className) =>
-            `<span class="${className} w-2 h-2 bg-primary/50 rounded-full transition-all duration-300 hover:bg-primary sm:w-3 sm:h-3"></span>`,
+            `<span class="${className} w-2 h-2 rounded-full bg-primary opacity-50 transition-all duration-300 hover:opacity-100 [&.swiper-pagination-bullet-active]:bg-primary! [&.swiper-pagination-bullet-active]:opacity-100! sm:w-3 sm:h-3"></span>`,
         }}
         navigation={{
           nextEl: ".swiper-button-next",
@@ -243,7 +243,7 @@ const Slider = () => {
       {/* Navigation Buttons in Container */}
       <div className="absolute bottom-10 left-0 right-0 z-10 pointer-events-none">
         <Container className="flex items-center justify-between">
-          <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+          <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
             <svg
               className="h-4 w-4 sm:h-5 sm:w-5"
               fill="none"
@@ -259,7 +259,7 @@ const Slider = () => {
             </svg>
           </div>
 
-          <div className="swiper-button-next static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
+          <div className="swiper-button-next static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
             <svg
               className="h-4 w-4 sm:h-5 sm:w-5"
               fill="none"
@@ -277,10 +277,10 @@ const Slider = () => {
         </Container>
       </div>
 
-      {/* Pagination - Center Bottom (Adjusted slightly up to not conflict spacing) */}
+      {/* Pagination - Center Bottom */}
       <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform sm:bottom-12">
-        <div className="flex space-x-2 rounded-full bg-slate-900/60 px-3 py-2 backdrop-blur-sm sm:space-x-3 sm:px-4">
-          <div className="hero-pagination" />
+        <div className="rounded-full bg-slate-900/60 px-3 py-2 backdrop-blur-sm sm:px-4">
+          <div className="hero-pagination flex items-center justify-center gap-2" />
         </div>
       </div>
     </section>

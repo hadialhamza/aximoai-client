@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import useAxios from "@/hooks/useAxios";
 import RecentModelCard from "@/components/ui/cards/RecentModelCard";
+import Container from "../ui/container/Container";
+import MyBtn from "../ui/buttons/MyBtn";
+import SectionHeading from "../ui/sectionHeading/SectionHeading";
+import { Box } from "lucide-react";
 
 const RecentModels = () => {
   const api = useAxios();
@@ -23,29 +27,28 @@ const RecentModels = () => {
 
   return (
     <section>
-      <div className="section-container">
-        <div className="bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 mb-20 text-center md:text-left flex flex-col md:flex-row md:items-end sm:justify-between rounded-2xl shadow-[0_1px_15px_rgba(0,0,0,0.15)] p-5 md:p-6 lg:p-8">
-          <div>
-            <span className="inline-flex items-center rounded-full border border-emerald-400 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald-800 dark:text-emerald-200 mb-5">
-              - Latest Models -
-            </span>
-            <h2 className="section-title">
-              Latest{" "}
-              <span className="text-emerald-700 dark:text-emerald-400">
-                AI Models
+      <Container>
+        <div className="bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 rounded-2xl shadow-[0_1px_15px_rgba(0,0,0,0.15)] p-5 md:p-6 lg:p-8">
+          <SectionHeading
+            badge="Latest Models"
+            title={
+              <span>
+                Latest <span className="text-primary">AI Models</span>
               </span>
-            </h2>
-            <p className="section-subtitle text-slate-700 dark:text-slate-300">
-              Explore the latest AI models added to AximoAI. Recently
-              created models appear here automatically.
-            </p>
-          </div>
-          <div className="md:w-1/2 text-center md:text-end">
-            <Link
-              to="/all-models"
-              className="text-sm md:text-base lg:text-lg font-semibold rounded-full border-2 border-emerald-300 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40 px-4 md:px-6 py-2 text-emerald-700 dark:text-emerald-200 hover:text-emerald-900 dark:hover:text-emerald-100 transition-colors"
-            >
-              View all models →
+            }
+            description="Explore the latest AI models added to AximoAI. Recently created models appear here automatically."
+            align="left"
+            className="md:text-left text-center items-center md:items-start mx-auto md:mx-0"
+          />
+          <div className="w-full md:w-auto flex justify-center md:justify-end">
+            <Link to="/models">
+              <MyBtn
+                variant="outline"
+                icon={Box}
+                className="border-primary/50 hover:border-primary"
+              >
+                View all models
+              </MyBtn>
             </Link>
           </div>
         </div>
@@ -86,7 +89,7 @@ const RecentModels = () => {
             ))}
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 };
