@@ -11,6 +11,7 @@ import AddModel from "@/pages/addModel/AddModel";
 import MyPurchase from "@/pages/myPurchase/MyPurchase";
 import MyModels from "@/pages/myModels/MyModels";
 import ErrorPage from "@/pages/errorPage/ErrorPage";
+import Contact from "@/pages/contact/Contact";
 
 // create a variable for router with create browser router
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       {
         path: "models",
