@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
-import { Mail, Lock, Eye, EyeOff, LayoutDashboard, LogIn } from "lucide-react";
+import { Mail, Lock, LayoutDashboard, LogIn } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "@/hooks/useAuth";
 import MyBtn from "@/components/ui/buttons/MyBtn";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import Input from "@/components/ui/input/Input";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
 
@@ -156,67 +156,27 @@ const Login = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="email"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Email address
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Mail className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    autoComplete="email"
-                    required
-                  />
-                </div>
-              </div>
+              <Input
+                label="Email address"
+                type="email"
+                name="email"
+                id="email"
+                icon={Mail}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
 
-              {/* Password */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="password"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Lock className="h-4 w-4 text-slate-500" />
-                  </span>
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="w-full rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    autoComplete="current-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                    className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>{" "}
-                </div>
-              </div>
+              <Input
+                label="Password"
+                type="password"
+                name="password"
+                id="password"
+                icon={Lock}
+                placeholder="••••••••"
+                required
+                autoComplete="current-password"
+              />
 
               {/* Forgot Password */}
               <div className="flex justify-end text-xs mt-1">

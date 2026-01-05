@@ -6,8 +6,6 @@ import {
   Image as ImageIcon,
   Mail,
   Lock,
-  Eye,
-  EyeOff,
   ArrowRight,
   UserPlus,
 } from "lucide-react";
@@ -16,10 +14,9 @@ import useAuth from "@/hooks/useAuth";
 import MyBtn from "@/components/ui/buttons/MyBtn";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import Input from "@/components/ui/input/Input";
 
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
@@ -181,7 +178,7 @@ const Register = () => {
             </div>
 
             {/* Community Snapshot */}
-            <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20 rounded-2xl p-5">
+            <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20 rounded-2xl p-5 backdrop-blur-sm">
               <p className="text-xs uppercase text-primary dark:text-primary/90 tracking-wide mb-3 font-semibold">
                 Community Snapshot
               </p>
@@ -242,152 +239,71 @@ const Register = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-1">
-              {/* Name */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="name"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Full name
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <User className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                  </span>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Your name"
-                    className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    required
-                  />
-                </div>
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                label="Full name"
+                type="text"
+                name="name"
+                id="name"
+                icon={User}
+                placeholder="Your name"
+                required
+              />
 
-              {/* Photo URL */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="photoURL"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Photo URL{" "}
-                  <span className="text-slate-400 dark:text-slate-500">
-                    (optional)
+              <Input
+                label={
+                  <span>
+                    Photo URL{" "}
+                    <span className="text-slate-400 dark:text-slate-500">
+                      (optional)
+                    </span>
                   </span>
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <ImageIcon className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                  </span>
-                  <input
-                    id="photoURL"
-                    name="photoURL"
-                    type="url"
-                    placeholder="https://example.com/avatar.jpg"
-                    className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                  />
-                </div>
-              </div>
+                }
+                type="url"
+                name="photoURL"
+                id="photoURL"
+                icon={ImageIcon}
+                placeholder="https://example.com/avatar.jpg"
+              />
 
-              {/* Email */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="email"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Email address
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Mail className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                  </span>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    autoComplete="email"
-                    required
-                  />
-                </div>
-              </div>
+              <Input
+                label="Email address"
+                type="email"
+                name="email"
+                id="email"
+                icon={Mail}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
 
-              {/* Password */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="password"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Lock className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                  </span>
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter Password"
-                    className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    autoComplete="new-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
-                <p className="text-[10px] text-slate-500 dark:text-slate-500 mt-1">
+              <div className="space-y-1">
+                <Input
+                  label="Password"
+                  type="password"
+                  name="password"
+                  id="password"
+                  icon={Lock}
+                  placeholder="Enter Password"
+                  required
+                  autoComplete="new-password"
+                />
+                <p className="text-[10px] text-slate-500 dark:text-slate-500">
                   Must be at least 6 characters and include uppercase,
                   lowercase, number &amp; special character.
                 </p>
               </div>
 
-              {/* Confirm Password */}
-              <div className="space-y-1.5">
-                <label
-                  htmlFor="confirmPassword"
-                  className="text-xs font-medium text-slate-800 dark:text-slate-200"
-                >
-                  Confirm password
-                </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center">
-                    <Lock className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                  </span>
-                  <input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type={showConfirm ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="w-full rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700/80 pl-10 pr-10 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-primary/80 transition-all"
-                    autoComplete="new-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirm((prev) => !prev)}
-                    className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {showConfirm ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
+              <Input
+                label="Confirm password"
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                icon={Lock}
+                placeholder="••••••••"
+                required
+                autoComplete="new-password"
+              />
 
               {/* Submit */}
               <MyBtn
