@@ -132,7 +132,7 @@ const Register = () => {
   const isSubmitting = localLoading || loading;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-white to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left side */}
         <motion.div

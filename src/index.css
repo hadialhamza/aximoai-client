@@ -60,7 +60,7 @@
 
   body {
     font-family: var(--font-sans);
-    @apply bg-base-200 text-base-content antialiased;
+    @apply min-h-screen bg-linear-to-br from-white to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950 text-base-content antialiased;
   }
 }
 
