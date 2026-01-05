@@ -102,7 +102,7 @@ const Login = () => {
               className="items-start text-left mx-0 mb-0"
             />
 
-            <div className="bg-white/90 dark:bg-slate-900/60 border border-primary/20 rounded-2xl p-5 backdrop-blur-xl shadow-lg shadow-primary/10">
+            <div className="bg-white/90 dark:bg-slate-900/60 border border-primary/20 rounded-2xl p-5 shadow-lg shadow-primary/10">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-xs uppercase text-slate-500 dark:text-slate-400 tracking-wide">
