@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { Home, Box, PlusSquare, Folder, ShoppingBag } from "lucide-react";
 
-const NavLinks = ({ user, className = "", onLinkClick }) => {
+const NavLinks = ({ user, className, onLinkClick }) => {
   const links = [
     { href: "/", label: "Home", icon: Home },
     { href: "/models", label: "All Models", icon: Box },
@@ -27,7 +27,7 @@ const NavLinks = ({ user, className = "", onLinkClick }) => {
           to={link.href}
           onClick={handleClick}
           className={({ isActive }) =>
-            `group relative flex items-center gap-1 px-2 py-1 text-sm rounded-xl transition-transform duration-300 hover:bg-primary/15 ${
+            `group relative flex items-center gap-2 md:gap-1 px-4 md:px-2 py-3 md:py-1 text-sm rounded-xl transition-transform duration-300 hover:bg-primary/15 ${
               isActive
                 ? "text-primary font-semibold bg-primary/10"
                 : "text-foreground/80 hover:text-primary"
