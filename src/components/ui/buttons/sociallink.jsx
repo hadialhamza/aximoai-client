@@ -4,7 +4,7 @@ import { FaLinkedinIn, FaGithub, FaInstagram, FaYoutube } from "react-icons/fa";
 const SocialTooltip = () => {
   return (
     <div className="flex items-center justify-center">
-      <ul className="flex flex-col items-center gap-4 md:flex-row">
+      <ul className="flex flex-row items-center gap-4">
         {/* LinkedIn */}
         <li className="relative group">
           <a
