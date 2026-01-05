@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import { Menu, X, LogIn } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
@@ -9,28 +9,12 @@ import ProfileDropdown from "./ProfileDropdown";
 import MobileMenu from "./MobileMenu";
 import Container from "@/components/ui/container/Container";
 import MyBtn from "@/components/ui/buttons/MyBtn";
+import { useTheme } from "@/hooks/useTheme";
 
 const Navbar = () => {
   const { user, logout, loading } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
-  );
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
 
   const handleSetMenu = () => {
     setMenuOpen(!menuOpen);

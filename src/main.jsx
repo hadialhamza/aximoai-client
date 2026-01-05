@@ -6,14 +6,17 @@ import { ToastContainer } from "react-toastify";
 import router from "./routes/Router.jsx";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import SmoothScroll from "./providers/SmoothScroll.jsx";
+import { ThemeProvider } from "./providers/ThemeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <SmoothScroll>
-        <RouterProvider router={router} />
-      </SmoothScroll>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <SmoothScroll>
+          <RouterProvider router={router} />
+        </SmoothScroll>
+      </AuthProvider>
+    </ThemeProvider>
     <ToastContainer />
   </StrictMode>
 );
