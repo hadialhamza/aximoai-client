@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router";
 import useAuth from "@/hooks/useAuth";
-import { PuffLoader } from "react-spinners";
+import PageLoader from "@/components/ui/loading/PageLoader";
 
 // Private route component have "children" prop by default.
 const PrivateRoute = ({ children }) => {
@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
 
   // show loader when user information is loading
   if (loading) {
-    return <PuffLoader color="#00BFFF" />;
+    return <PageLoader />;
   }
 
   // if user is logged in, then show the private route component, else redirect to login page.
