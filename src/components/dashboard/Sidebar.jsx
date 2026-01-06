@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import {
   LayoutDashboard,
@@ -11,12 +12,21 @@ import {
   FileText,
 } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
+import useSecureAxios from "@/hooks/useSecureAxios";
 import Logo from "../shared/logo/Logo";
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
+  const axiosSecure = useSecureAxios();
+  const [role, setRole] = useState(null);
 
-  const role = "user";
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure.get(`/users/${user.email}`).then((res) => {
+        setRole(res.data?.role);
+      });
+    }
+  }, [user, axiosSecure]);
 
   const links = [
     { href: "/dashboard", label: "Overview", icon: LayoutDashboard, end: true },

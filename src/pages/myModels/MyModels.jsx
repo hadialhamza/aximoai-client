@@ -98,7 +98,7 @@ const MyModels = () => {
             className="md:mx-0 items-start mx-0 mb-0"
           />
 
-          <Link to="/add-model">
+          <Link to="/dashboard/add-model">
             <MyBtn className="shadow-lg shadow-primary/25">
               + Add New Model
             </MyBtn>
@@ -114,7 +114,7 @@ const MyModels = () => {
               <p className="text-lg text-slate-800 dark:text-slate-200 font-medium">
                 You haven&apos;t added any models yet.
               </p>
-              <Link to="/add-model">
+              <Link to="/dashboard/add-model">
                 <MyBtn className="shadow-lg shadow-primary/25">
                   + Add your first model
                 </MyBtn>
@@ -216,7 +216,7 @@ const MyModels = () => {
                     {/* Actions */}
                     <td className="py-3 pl-3 align-top text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <Link to={`/update-model/${model._id}`}>
+                        <Link to={`/dashboard/update-model/${model._id}`}>
                           <MyBtn
                             variant="outline"
                             className="h-auto px-3 py-1.5 text-[11px] gap-1.5 border-primary/50 text-primary hover:bg-primary/10"

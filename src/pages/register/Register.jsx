@@ -14,6 +14,7 @@ import useAuth from "@/hooks/useAuth";
 import MyBtn from "@/components/ui/buttons/MyBtn";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import useAxios from "@/hooks/useAxios";
 import Input from "@/components/ui/input/Input";
 
 const Register = () => {
@@ -22,6 +23,7 @@ const Register = () => {
   const [localLoading, setLocalLoading] = useState(false);
 
   const { createUser, profileUpdate, googleLogin, user, loading } = useAuth();
+  const axiosPublic = useAxios();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -100,6 +102,14 @@ const Register = () => {
         });
       }
 
+      // 3. Save user to database
+      const userInfo = {
+        name: name,
+        email: email,
+        photoURL: photoURL || "https://i.ibb.co.com/Fm6d0pP/user.png",
+      };
+      await axiosPublic.post("/users", userInfo);
+
       setSuccess("Account created successfully! Redirecting...");
       form.reset();
       navigate(from, { replace: true });
@@ -119,7 +129,15 @@ const Register = () => {
     setLocalLoading(true);
 
     try {
-      await googleLogin();
+      const result = await googleLogin();
+      const user = result.user;
+      const userInfo = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      };
+      await axiosPublic.post("/users", userInfo);
+
       setSuccess("Signed up with Google successfully!");
       navigate(from, { replace: true });
     } catch (err) {

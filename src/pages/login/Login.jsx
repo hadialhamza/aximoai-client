@@ -8,12 +8,14 @@ import MyBtn from "@/components/ui/buttons/MyBtn";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import Input from "@/components/ui/input/Input";
+import useAxios from "@/hooks/useAxios";
 
 const Login = () => {
   const [error, setError] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
 
   const { emailLogin, googleLogin, user, loading } = useAuth();
+  const axiosPublic = useAxios();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -66,7 +68,14 @@ const Login = () => {
     setError("");
     setLocalLoading(true);
     try {
-      await googleLogin();
+      const result = await googleLogin();
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        photoURL: result.user.photoURL,
+      };
+      await axiosPublic.post("/users", userInfo);
+
       navigate(from, { replace: true });
     } catch (err) {
       console.error(err);

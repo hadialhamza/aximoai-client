@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   User,
   Mail,
@@ -9,219 +9,371 @@ import {
   X,
   Camera,
   Calendar,
+  Github,
+  Linkedin,
+  Globe,
+  Briefcase,
+  Award,
+  Box,
 } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
+import useSecureAxios from "@/hooks/useSecureAxios";
 import Container from "@/components/ui/container/Container";
 import MyBtn from "@/components/ui/buttons/MyBtn";
+import Swal from "sweetalert2";
 
 const Profile = () => {
   const { user } = useAuth();
+  const axiosSecure = useSecureAxios();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
-  // Initial Form State
+  // Form State
   const [formData, setFormData] = useState({
-    displayName: user?.displayName || "Aximo User",
-    headline: "AI & Machine Learning Enthusiast",
-    email: user?.email || "",
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA",
-    about:
-      "Passionate about exploring the frontiers of Artificial Intelligence. Experienced in building scalable ML models and integrating them into user-friendly applications. Always learning and sharing knowledge with the community.",
+    displayName: "",
+    headline: "",
+    email: "",
+    phone: "",
+    location: "",
+    about: "",
+    github: "",
+    linkedin: "",
+    website: "",
+    skills: "React, Node.js, MongoDB, Tailwind CSS", // Stored as string, split for UI
   });
+
+  // Mock Stats (You can fetch these from backend later)
+  const stats = [
+    { label: "Models", value: "12", icon: Box },
+    { label: "Purchases", value: "8", icon: Briefcase },
+    { label: "Reputation", value: "Top 10%", icon: Award },
+  ];
+
+  // Fetch user data
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure
+        .get(`/users/${user.email}`)
+        .then((res) => {
+          const data = res.data;
+          setFormData({
+            displayName: data.displayName || user.displayName || "Aximo User",
+            headline: data.headline || "AI & Machine Learning Enthusiast",
+            email: data.email || user.email || "",
+            phone: data.phone || "+1 (555) 123-4567",
+            location: data.location || "San Francisco, CA",
+            about:
+              data.about ||
+              "Passionate about exploring the frontiers of Artificial Intelligence. Experienced in building scalable ML models and integrating them into user-friendly applications.",
+            github: data.github || "github.com/hadialhamza",
+            linkedin: data.linkedin || "linkedin.com/in/hadi",
+            website: data.website || "aximo.ai",
+            skills:
+              data.skills ||
+              "React, Node.js, MongoDB, Tailwind CSS, Python, TensorFlow",
+          });
+        })
+        .catch((err) => console.error(err))
+        .finally(() => setPageLoading(false));
+    }
+  }, [user, axiosSecure]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      // API call to update user
+      await axiosSecure.put(`/users/${user.email}`, formData);
       setIsEditing(false);
-    }, 1000);
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated",
+        text: "Your changes have been saved successfully.",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error("Failed to update profile", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    // Reset data if needed, or kept as is for now
-  };
+  if (pageLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-base-200/50 pb-20">
-      {/* 1. Hero Cover Area */}
+      {/* 1. Hero Cover Area with Gradient Overlay */}
       <div className="h-64 md:h-80 w-full relative overflow-hidden group">
         <img
           src="https://i.ibb.co.com/fzvxCQ0q/cover-photo.jpg"
           alt="Cover"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20"></div>
+        {/* Gradient Overlay for better text readability if needed */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
-        {/* Cover Edit Button */}
-        <button className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 cursor-pointer">
-          <Camera className="w-5 h-5" />
-        </button>
+        {/* Cover Actions */}
+        <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button className="bg-black/40 hover:bg-black/60 text-white px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-2 text-sm font-medium cursor-pointer border border-white/10">
+            <Camera className="w-4 h-4" /> Change Cover
+          </button>
+        </div>
       </div>
 
       <Container>
-        <div className="relative -mt-20 md:-mt-24 mb-6 flex flex-col md:flex-row items-end md:items-end gap-6 px-4">
-          {/* 2. Avatar */}
-          <div className="relative group">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-base-100 dark:border-base-200 bg-base-100 shadow-2xl overflow-hidden flex items-center justify-center">
-              {user?.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt={formData.displayName}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              ) : (
-                <div className="w-full h-full bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                  <User className="w-16 h-16 text-slate-400" />
-                </div>
-              )}
+        {/* 2. Profile Header & Actions */}
+        <div className="relative -mt-20 md:-mt-24 mb-8 flex flex-col md:flex-row items-end gap-6 px-2">
+          {/* Avatar */}
+          <div className="relative group shrink-0 mx-auto md:mx-0">
+            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full border-[6px] border-base-100 bg-base-100 shadow-2xl overflow-hidden relative z-10">
+              <img
+                src={user?.photoURL || "https://i.ibb.co/Fm6d0pP/user.png"}
+                alt="Profile"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
             </div>
-            <button className="absolute bottom-2 right-2 bg-primary text-white p-2 rounded-full shadow-lg hover:bg-primary/90 transition-transform hover:scale-105 cursor-pointer">
+            <button className="absolute bottom-3 right-3 z-20 bg-primary text-white p-2.5 rounded-full shadow-lg hover:bg-primary/90 hover:scale-110 transition-all cursor-pointer border-4 border-base-100">
               <Camera className="w-4 h-4" />
             </button>
           </div>
 
-          {/* 3. Main Info */}
-          <div className="flex-1 pb-4 text-center md:text-left">
-            <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4">
-              <div>
+          {/* User Info Header */}
+          <div className="flex-1 text-center md:text-left w-full">
+            <div className="flex flex-col md:flex-row justify-between items-end gap-4 pb-2">
+              <div className="w-full">
                 {isEditing ? (
-                  <input
-                    type="text"
-                    name="displayName"
-                    value={formData.displayName}
-                    onChange={handleChange}
-                    className="bg-transparent border-b-2 border-primary text-3xl md:text-4xl font-bold text-foreground focus:outline-none w-full md:w-auto text-center md:text-left"
-                  />
+                  <div className="space-y-3 mb-2 animate-in fade-in zoom-in-95 duration-300">
+                    <input
+                      type="text"
+                      name="displayName"
+                      value={formData.displayName}
+                      onChange={handleChange}
+                      className="bg-base-100 border border-primary/50 text-2xl md:text-4xl font-bold text-foreground rounded-lg px-3 py-1 w-full md:w-2/3 focus:ring-2 focus:ring-primary/20 outline-none"
+                      placeholder="Your Name"
+                    />
+                    <input
+                      type="text"
+                      name="headline"
+                      value={formData.headline}
+                      onChange={handleChange}
+                      className="bg-base-100 border border-primary/50 text-lg text-muted rounded-lg px-3 py-1 w-full md:w-2/3 focus:ring-2 focus:ring-primary/20 outline-none"
+                      placeholder="Your Headline (e.g. AI Engineer)"
+                    />
+                  </div>
                 ) : (
-                  <h1 className="text-3xl md:text-4xl font-bold text-foreground font-heading tracking-tight">
-                    {formData.displayName}
-                  </h1>
-                )}
-
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="headline"
-                    value={formData.headline}
-                    onChange={handleChange}
-                    className="mt-2 bg-transparent border-b border-border text-lg text-muted focus:border-primary focus:outline-none w-full text-center md:text-left"
-                  />
-                ) : (
-                  <p className="text-lg text-muted font-light mt-1">
-                    {formData.headline}
-                  </p>
+                  <>
+                    <h1 className="text-3xl md:text-4xl font-bold text-foreground font-heading tracking-tight mb-1">
+                      {formData.displayName}
+                    </h1>
+                    <p className="text-lg text-muted font-light flex items-center justify-center md:justify-start gap-2">
+                      {formData.headline}
+                    </p>
+                  </>
                 )}
               </div>
 
-              <div className="flex gap-3">
+              {/* Edit/Save Buttons */}
+              <div className="flex gap-2 shrink-0 mb-1">
                 {isEditing ? (
                   <>
                     <button
-                      onClick={handleCancel}
-                      className="px-5 py-2.5 rounded-xl font-medium text-muted hover:bg-base-300 transition-colors flex items-center gap-2 cursor-pointer"
+                      onClick={() => setIsEditing(false)}
+                      className="btn btn-ghost btn-sm"
                     >
-                      <X className="w-4 h-4" /> Cancel
+                      Cancel
                     </button>
                     <MyBtn
                       onClick={handleSave}
                       disabled={loading}
-                      className="shadow-lg shadow-primary/25"
+                      className="gap-2 shadow-lg shadow-primary/20"
                     >
                       {loading ? (
-                        "Saving..."
+                        <span className="loading loading-spinner loading-xs"></span>
                       ) : (
-                        <>
-                          <Save className="w-4 h-4" /> Save Changes
-                        </>
+                        <Save className="w-4 h-4" />
                       )}
+                      Save Changes
                     </MyBtn>
                   </>
                 ) : (
-                  <MyBtn
-                    variant="outline"
+                  <button
                     onClick={() => setIsEditing(true)}
-                    className="border-primary/20 hover:border-primary/50 hover:bg-primary/5"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium border border-border bg-base-100 hover:bg-base-200 hover:border-primary/30 transition-all cursor-pointer shadow-sm text-foreground"
                   >
                     <Edit3 className="w-4 h-4" /> Edit Profile
-                  </MyBtn>
+                  </button>
                 )}
               </div>
             </div>
           </div>
         </div>
 
-        {/* 4. Content Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-          {/* Left Column: Contact & Personal Info */}
-          <div className="space-y-6">
-            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold font-heading mb-4 flex items-center gap-2">
-                <User className="w-5 h-5 text-primary" />
-                Personal Info
-              </h3>
+        {/* 3. Stats Row (New Feature) */}
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-4 mb-8">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="bg-base-100 border border-border p-4 rounded-2xl shadow-sm flex flex-col items-center justify-center md:flex-row md:justify-start gap-3 hover:border-primary/30 transition-colors group"
+            >
+              <div className="p-3 bg-base-200 rounded-xl text-muted group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+                <stat.icon size={20} />
+              </div>
+              <div className="text-center md:text-left">
+                <h4 className="text-xl font-bold text-foreground font-heading">
+                  {stat.value}
+                </h4>
+                <p className="text-xs text-muted uppercase tracking-wider font-medium">
+                  {stat.label}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-              <div className="space-y-4">
-                <InfoItem
-                  icon={Mail}
-                  label="Email"
-                  value={formData.email}
-                  isEditing={false} // Email usually not editable here
-                />
+        {/* 4. Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Sidebar */}
+          <div className="space-y-6">
+            {/* Contact Info Card */}
+            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold font-heading mb-5 flex items-center gap-2">
+                <User className="w-5 h-5 text-primary" />
+                Contact Info
+              </h3>
+              <div className="space-y-5">
+                <InfoItem icon={Mail} label="Email" value={formData.email} />
                 <InfoItem
                   icon={Phone}
                   label="Phone"
-                  value={formData.phone}
                   name="phone"
+                  value={formData.phone}
                   isEditing={isEditing}
                   onChange={handleChange}
                 />
                 <InfoItem
                   icon={MapPin}
                   label="Location"
-                  value={formData.location}
                   name="location"
+                  value={formData.location}
                   isEditing={isEditing}
                   onChange={handleChange}
                 />
                 <InfoItem
                   icon={Calendar}
-                  label="Joined"
+                  label="Member Since"
                   value="January 2024"
-                  isEditing={false}
+                />
+              </div>
+            </div>
+
+            {/* Social Links Card (New) */}
+            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold font-heading mb-5 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-primary" />
+                Social Presence
+              </h3>
+              <div className="space-y-4">
+                <SocialInput
+                  icon={Github}
+                  label="GitHub"
+                  name="github"
+                  value={formData.github}
+                  isEditing={isEditing}
+                  onChange={handleChange}
+                  placeholder="username"
+                />
+                <SocialInput
+                  icon={Linkedin}
+                  label="LinkedIn"
+                  name="linkedin"
+                  value={formData.linkedin}
+                  isEditing={isEditing}
+                  onChange={handleChange}
+                  placeholder="username"
+                />
+                <SocialInput
+                  icon={Globe}
+                  label="Website"
+                  name="website"
+                  value={formData.website}
+                  isEditing={isEditing}
+                  onChange={handleChange}
+                  placeholder="https://..."
                 />
               </div>
             </div>
           </div>
 
-          {/* Right Column: About & Stats */}
-          <div className="md:col-span-2 space-y-6">
-            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm min-h-[300px]">
-              <h3 className="text-lg font-semibold font-heading mb-4">
-                About Me
-              </h3>
+          {/* Main Content Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* About Me */}
+            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold font-heading mb-4">About Me</h3>
               {isEditing ? (
                 <textarea
                   name="about"
                   value={formData.about}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full bg-base-200 rounded-xl p-4 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all"
+                  className="w-full bg-base-200/50 border border-border rounded-xl p-4 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-base-100 resize-none transition-all leading-relaxed"
+                  placeholder="Tell us about yourself..."
                 />
               ) : (
-                <p className="text-muted leading-relaxed whitespace-pre-line">
+                <p className="text-muted leading-relaxed whitespace-pre-line text-lg">
                   {formData.about}
                 </p>
               )}
             </div>
 
-            {/* Optional: Activity Stats or Badges could go here */}
+            {/* Skills / Tags (New) */}
+            <div className="bg-base-100 border border-border rounded-3xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold font-heading mb-4 flex items-center gap-2">
+                <Award className="w-5 h-5 text-primary" /> Skills & Expertise
+              </h3>
+
+              {isEditing ? (
+                <div>
+                  <input
+                    type="text"
+                    name="skills"
+                    value={formData.skills}
+                    onChange={handleChange}
+                    className="w-full bg-base-200/50 border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary"
+                    placeholder="Separate skills with commas (e.g. React, Design)"
+                  />
+                  <p className="text-xs text-muted mt-2">
+                    Separate tags with commas.
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {formData.skills.split(",").map((skill, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1.5 rounded-lg bg-base-200 text-foreground text-sm font-medium border border-border"
+                    >
+                      {skill.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Container>
@@ -229,30 +381,62 @@ const Profile = () => {
   );
 };
 
-// Helper Component for Info Items with Edit State
+// --- Reusable Sub-components ---
+
 const InfoItem = ({ icon: Icon, label, value, isEditing, name, onChange }) => (
-  <div className="group">
-    <label className="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">
-      {label}
-    </label>
-    <div className="flex items-center gap-3">
-      <div className="w-8 h-8 rounded-lg bg-base-200 flex items-center justify-center text-primary shrink-0">
-        <Icon className="w-4 h-4" />
-      </div>
-      <div className="flex-1">
-        {isEditing ? (
-          <input
-            type="text"
-            name={name}
-            value={value}
-            onChange={onChange}
-            className="w-full bg-transparent border-b border-border focus:border-primary focus:outline-none py-1 text-foreground transition-all"
-          />
-        ) : (
-          <p className="text-foreground font-medium truncate">{value}</p>
-        )}
-      </div>
+  <div className="flex items-center gap-3 group">
+    <div className="w-10 h-10 rounded-xl bg-base-200/50 flex items-center justify-center text-muted group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
+      <Icon className="w-5 h-5" />
     </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-0.5">
+        {label}
+      </p>
+      {isEditing && name ? (
+        <input
+          type="text"
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="w-full bg-base-200/50 border-b-2 border-primary/50 px-2 py-0.5 focus:outline-none focus:bg-base-100 rounded-t"
+        />
+      ) : (
+        <p className="text-foreground font-medium truncate text-sm md:text-base">
+          {value}
+        </p>
+      )}
+    </div>
+  </div>
+);
+
+const SocialInput = ({
+  icon: Icon,
+  label,
+  value,
+  isEditing,
+  name,
+  onChange,
+  placeholder,
+}) => (
+  <div className="flex items-center gap-3">
+    <Icon className="w-5 h-5 text-muted shrink-0" />
+    {isEditing ? (
+      <input
+        type="text"
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full bg-base-200/50 border border-border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-primary"
+      />
+    ) : (
+      <a
+        href="#"
+        className="text-sm font-medium text-primary hover:underline truncate"
+      >
+        {value || <span className="text-muted italic">Not connected</span>}
+      </a>
+    )}
   </div>
 );
 
