@@ -18,6 +18,7 @@ import Profile from "@/pages/dashboard/Profile";
 import AllUsers from "@/pages/dashboard/admin/AllUsers";
 import AllModelsAdmin from "@/pages/dashboard/admin/AllModelsAdmin";
 import Reports from "@/pages/dashboard/admin/Reports";
+import About from "@/pages/about/About";
 
 // create a variable for router with create browser router
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
       {
         path: "models",

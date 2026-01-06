@@ -1,10 +1,12 @@
 import { NavLink } from "react-router";
-import { Home, Box, PlusSquare, Folder, ShoppingBag, LayoutDashboard } from "lucide-react";
+import { Home, Box, PlusSquare, Folder, ShoppingBag, LayoutDashboard, Info, Mail } from "lucide-react";
 
 const NavLinks = ({ user, className, onLinkClick }) => {
   const links = [
     { href: "/", label: "Home", icon: Home },
     { href: "/models", label: "All Models", icon: Box },
+    { href: "/about", label: "About", icon: Info },
+    { href: "/contact", label: "Contact", icon: Mail },
   ];
 
   if (user) {

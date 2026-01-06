@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router";
-import { User, Mail, ShoppingBag } from "lucide-react";
+import { User, Mail, ShoppingBag, LayoutDashboard, PlusSquare } from "lucide-react";
 
 const ProfileDropdown = ({ user, logout }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,10 +14,15 @@ const ProfileDropdown = ({ user, logout }) => {
     };
 
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      // Use capture phase to handle clicks even if propagation is stopped by other elements (like sliders)
+      document.addEventListener("mousedown", handleClickOutside, true);
+      document.addEventListener("touchstart", handleClickOutside, true);
+      document.addEventListener("click", handleClickOutside, true);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside, true);
+      document.removeEventListener("touchstart", handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [isOpen]);
 
@@ -27,11 +32,10 @@ const ProfileDropdown = ({ user, logout }) => {
     <div className="relative hidden md:block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`relative p-0.5 rounded-full transition-all duration-200 ${
-          isOpen
-            ? "ring-2 ring-emerald-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-950"
-            : "hover:ring-2 hover:ring-emerald-500/50 hover:ring-offset-1 hover:ring-offset-white dark:hover:ring-offset-slate-950"
-        }`}
+        className={`relative p-0.5 rounded-full transition-all duration-200 ${isOpen
+          ? "ring-2 ring-emerald-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-950"
+          : "hover:ring-2 hover:ring-emerald-500/50 hover:ring-offset-1 hover:ring-offset-white dark:hover:ring-offset-slate-950"
+          }`}
       >
         <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-emerald-500/20 bg-slate-100 dark:bg-slate-800">
           {user?.photoURL ? (
@@ -74,32 +78,12 @@ const ProfileDropdown = ({ user, logout }) => {
           </div>
 
           <div className="p-2 space-y-1">
-            <NavLink
-              to="/my-models"
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 text-sm rounded-xl transition-colors ${
-                  isActive
-                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900"
-                }`
-              }
-              onClick={() => setIsOpen(false)}
-            >
-              <User className="h-4 w-4" /> My Models
-            </NavLink>
-            <NavLink
-              to="/my-purchase"
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 text-sm rounded-xl transition-colors ${
-                  isActive
-                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900"
-                }`
-              }
-              onClick={() => setIsOpen(false)}
-            >
-              <ShoppingBag className="h-4 w-4" /> My Purchases
-            </NavLink>
+            <DropdownLink to="/dashboard" icon={LayoutDashboard} label="Dashboard" onClick={() => setIsOpen(false)} />
+            <DropdownLink to="/dashboard/profile" icon={User} label="My Profile" onClick={() => setIsOpen(false)} />
+            <DropdownLink to="/dashboard/add-model" icon={PlusSquare} label="Add Model" onClick={() => setIsOpen(false)} />
+            <div className="my-1 border-t border-slate-100 dark:border-slate-800/80 mx-2" />
+            <DropdownLink to="/dashboard/my-models" icon={User} label="My Models" onClick={() => setIsOpen(false)} />
+            <DropdownLink to="/dashboard/my-purchase" icon={ShoppingBag} label="My Purchases" onClick={() => setIsOpen(false)} />
           </div>
 
           <div className="p-2 border-t border-slate-100 dark:border-slate-800">
@@ -128,5 +112,21 @@ const ProfileDropdown = ({ user, logout }) => {
     </div>
   );
 };
+
+// Helper for cleaner code
+const DropdownLink = ({ to, icon: Icon, label, onClick }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center gap-2 px-3 py-2 text-sm rounded-xl transition-colors ${isActive
+        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 font-medium"
+        : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900"
+      }`
+    }
+    onClick={onClick}
+  >
+    <Icon className="h-4 w-4" /> {label}
+  </NavLink>
+);
 
 export default ProfileDropdown;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
-import { Mail, Lock, LayoutDashboard, LogIn } from "lucide-react";
+import { Mail, Lock, LayoutDashboard, LogIn, Shield, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "@/hooks/useAuth";
 import MyBtn from "@/components/ui/buttons/MyBtn";
@@ -14,12 +14,16 @@ const Login = () => {
   const [error, setError] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
 
+  // State for inputs to handle auto-fill
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const { emailLogin, googleLogin, user, loading } = useAuth();
   const axiosPublic = useAxios();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   useEffect(() => {
     document.title = "Login | AximoAI";
@@ -31,14 +35,22 @@ const Login = () => {
     }
   }, [user, loading, from, navigate]);
 
+  // --- Auto-Fill Credentials Function ---
+  const fillCredentials = (role) => {
+    if (role === "admin") {
+      setEmail("hamzaglory@gmail.com");
+      setPassword("Abc@123");
+    } else {
+      setEmail("hamzaivac@gmail.com");
+      setPassword("Abc@123");
+    }
+    setError(""); // Clear any previous errors
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLocalLoading(true);
-
-    const form = e.target;
-    const email = form.email.value.trim();
-    const password = form.password.value;
 
     if (!email || !password) {
       setError("Please fill in both email and password.");
@@ -48,6 +60,7 @@ const Login = () => {
 
     try {
       await emailLogin(email, password);
+      // Navigation happens in useEffect when user state changes
     } catch (err) {
       console.error(err);
       let message = err?.message || "Failed to sign in. Please try again.";
@@ -91,7 +104,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center py-10 px-4">
       <Container>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-center">
-          {/* Left side */}
+          {/* Left side: Intro & Dashboard Preview */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -142,7 +155,7 @@ const Login = () => {
             </div>
           </motion.div>
 
-          {/* Right side: Form */}
+          {/* Right side: Login Form */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -156,6 +169,36 @@ const Login = () => {
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Enter your credentials to access the dashboard.
               </p>
+            </div>
+
+            {/* --- Demo Credentials Box --- */}
+            <div className="mb-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center mb-3">
+                Quick Demo Access
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => fillCredentials("admin")}
+                  className="flex flex-col items-center justify-center py-3 px-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary/50 hover:bg-primary/5 transition-all group"
+                >
+                  <Shield className="w-5 h-5 text-primary mb-1.5 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    Admin Demo
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => fillCredentials("user")}
+                  className="flex flex-col items-center justify-center py-3 px-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all group"
+                >
+                  <User className="w-5 h-5 text-emerald-500 mb-1.5 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    User Demo
+                  </span>
+                </button>
+              </div>
             </div>
 
             {error && (
@@ -174,6 +217,8 @@ const Login = () => {
                 placeholder="you@example.com"
                 required
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <Input
@@ -185,6 +230,8 @@ const Login = () => {
                 placeholder="••••••••"
                 required
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               {/* Forgot Password */}
