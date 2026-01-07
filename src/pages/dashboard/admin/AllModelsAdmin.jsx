@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import useSecureAxios from "@/hooks/useSecureAxios";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
+import AllModelsAdminSkeleton from "@/components/skeletons/AllModelsAdminSkeleton";
 import {
   Box,
   Trash2,
+  Edit,
   Search,
   Filter,
-  MoreVertical,
   Cpu,
   ShoppingCart,
   Layers,
 } from "lucide-react";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const AllModelsAdmin = () => {
   const axiosSecure = useSecureAxios();
@@ -64,7 +66,7 @@ const AllModelsAdmin = () => {
             fetchModels();
           }
         } catch (error) {
-          Swal.fire("Error", "Failed to delete model.", "error");
+          Swal.fire(error, "Failed to delete model.");
         }
       }
     });
@@ -81,45 +83,47 @@ const AllModelsAdmin = () => {
     return styles[framework] || "bg-gray-100 text-gray-700 border-gray-200";
   };
 
-  // Calculate Stats
+  // --- FIXED CALCULATION LOGIC ---
+
+  // 1. Total Purchases Calculation
   const totalPurchases = models.reduce(
     (acc, curr) => acc + (curr.purchased || 0),
     0
   );
+
+  // 2. Top Framework Calculation (FIXED: Added [...models] to avoid mutation)
   const topFramework =
     models.length > 0
-      ? models
-          .sort(
-            (a, b) =>
-              models.filter((v) => v.framework === a.framework).length -
-              models.filter((v) => v.framework === b.framework).length
-          )
-          .pop()?.framework
+      ? [...models] // Create a shallow copy before sorting/popping
+        .sort(
+          (a, b) =>
+            models.filter((v) => v.framework === a.framework).length -
+            models.filter((v) => v.framework === b.framework).length
+        )
+        .pop()?.framework
       : "N/A";
 
-  // Filter Logic (Simple Search)
+  // --- FIXED FILTER LOGIC ---
   const filteredModels = models.filter(
     (model) =>
-      model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      model.framework.toLowerCase().includes(searchTerm.toLowerCase())
+      (model.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (model.framework || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
-    return (
-      <Container>
-        <div className="flex justify-center items-center h-[60vh]">
-          <span className="loading loading-spinner loading-lg text-primary"></span>
-        </div>
-      </Container>
-    );
+    return <AllModelsAdminSkeleton />;
   }
 
   return (
-    <Container>
+    <Container className="max-w-full">
       {/* 1. Header Section */}
       <div className="mb-8">
         <SectionHeading
-          title="Model Inventory"
+          title={
+            <>
+              Model <span className="text-primary">Inventory</span>
+            </>
+          }
           badge="Admin Dashboard"
           icon={Layers}
           description="Manage, track, and curate the AI models available on the platform."
@@ -135,7 +139,7 @@ const AllModelsAdmin = () => {
           </div>
           <div>
             <p className="text-sm text-muted font-medium">Total Models</p>
-            <h3 className="text-2xl font-bold text-base-content">
+            <h3 className="text-2xl font-bold text-base-content font-heading">
               {models.length}
             </h3>
           </div>
@@ -147,7 +151,7 @@ const AllModelsAdmin = () => {
           </div>
           <div>
             <p className="text-sm text-muted font-medium">Total Sales</p>
-            <h3 className="text-2xl font-bold text-base-content">
+            <h3 className="text-2xl font-bold text-base-content font-heading">
               {totalPurchases}
             </h3>
           </div>
@@ -159,7 +163,7 @@ const AllModelsAdmin = () => {
           </div>
           <div>
             <p className="text-sm text-muted font-medium">Top Framework</p>
-            <h3 className="text-2xl font-bold text-base-content">
+            <h3 className="text-2xl font-bold text-base-content font-heading">
               {topFramework}
             </h3>
           </div>
@@ -287,13 +291,22 @@ const AllModelsAdmin = () => {
 
                     {/* Actions */}
                     <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDelete(model._id)}
-                        className="p-2 text-muted hover:text-error hover:bg-error/10 rounded-lg transition-all"
-                        title="Delete Model"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center justify-end gap-2">
+                        <Link
+                          to={`/dashboard/update-model/${model._id}`}
+                          className="p-2 text-muted hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                          title="Edit Model"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(model._id)}
+                          className="p-2 text-muted hover:text-error hover:bg-error/10 rounded-lg transition-all"
+                          title="Delete Model"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

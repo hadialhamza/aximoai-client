@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
@@ -22,6 +23,7 @@ const AddModel = () => {
   const [submitting, setSubmitting] = useState(false);
   const axiosSecure = useSecureAxios();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     document.title = "Add Model | AximoAI";
@@ -59,6 +61,8 @@ const AddModel = () => {
       const { data } = await axiosSecure.post("/models", newModel);
 
       if (data?.result?.insertedId) {
+        await queryClient.invalidateQueries(["recentModels"]);
+        await queryClient.invalidateQueries(["models"]);
         toast.success("Model added successfully!");
         form.reset();
         navigate("/models", { replace: true });

@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/90 dark:bg-background/90 shadow-md backdrop-blur-xs border-b border-border py-2.5">
+    <nav className="sticky top-0 z-40 bg-white/85 dark:bg-background/80 backdrop-blur-md border-b border-border py-2">
       <Container className={"flex items-center justify-between"}>
         {/* Logo */}
         <div className="shrink-0 flex-1 ">
@@ -49,7 +49,9 @@ const Navbar = () => {
           ) : (
             <div className="hidden md:block">
               <Link to="/login">
-                <MyBtn icon={LogIn}>Login</MyBtn>
+                <MyBtn icon={LogIn} className={"h-10 px-5"}>
+                  Login
+                </MyBtn>
               </Link>
             </div>
           )}

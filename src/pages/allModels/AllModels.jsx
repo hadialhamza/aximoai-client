@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Cpu,
@@ -16,36 +17,27 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import MyBtn from "@/components/ui/buttons/MyBtn";
-import AllModelsSkeleton from "@/components/skeletons/AllModelsSkeleton";
+import ModelsSkeleton from "@/components/skeletons/ModelsSkeleton";
+import ModelCard from "@/components/shared/card/ModelCard";
 
 const AllModels = () => {
   const axios = useSecureAxios();
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [frameworkFilter, setFrameworkFilter] = useState("all");
   const [useCaseFilter, setUseCaseFilter] = useState("all");
   const [sortOption, setSortOption] = useState("newest");
 
-  useEffect(() => {
+  const { data: models = [], isLoading: loading } = useQuery({
+    queryKey: ["models"],
+    queryFn: async () => {
+      const res = await axios.get("/models");
+      return res.data.result;
+    },
+  });
+
+  useMemo(() => {
     document.title = "All Models | AximoAI";
   }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/models")
-      .then((res) => {
-        setModels(res.data.result);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch models:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [axios]);
 
   // Build filter lists based on loaded models
   const frameworkOptions = useMemo(() => {
@@ -272,7 +264,7 @@ const AllModels = () => {
 
         {/* Models grid */}
         {loading ? (
-          <AllModelsSkeleton />
+          <ModelsSkeleton />
         ) : filteredModels.length === 0 ? (
           <div className="min-h-[40vh] flex items-center justify-center">
             <div className="text-center space-y-2">
@@ -296,71 +288,7 @@ const AllModels = () => {
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8"
           >
             {filteredModels.map((model) => (
-              <div
-                key={model._id}
-                className="group bg-white/95 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-md dark:shadow-lg dark:shadow-primary/20 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/40 transition-all flex flex-col"
-              >
-                <div className="relative h-40 overflow-hidden">
-                  <img
-                    src={model.image}
-                    alt={model.name}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        "https://via.placeholder.com/600x400?text=Model+Image";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-                </div>
-
-                <div className="p-4 space-y-3 flex-1 flex flex-col">
-                  <div className="flex items-center justify-between gap-2">
-                    <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-50 line-clamp-1">
-                      {model.name}
-                    </h2>
-                  </div>
-
-                  <div className="space-y-1.5 text-[11px] text-slate-600 dark:text-slate-300">
-                    <div className="flex items-center gap-1.5">
-                      <Layers className="h-3.5 w-3.5 text-primary" />
-                      <span className="truncate">
-                        {model.framework || "Unknown framework"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <ListTree className="h-3.5 w-3.5 text-primary" />
-                      <span className="truncate">
-                        {model.useCase || "General use case"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Database className="h-3.5 w-3.5 text-primary" />
-                      <span className="truncate">
-                        {model.dataset || "Dataset not specified"}
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 mt-1 flex-1">
-                    {model.description}
-                  </p>
-
-                  <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-500">
-                    <span>
-                      Added{" "}
-                      {model.createdAt
-                        ? new Date(model.createdAt).toLocaleDateString()
-                        : "Recently"}
-                    </span>
-                    <Link
-                      to={`/models/${model._id}`}
-                      className="inline-flex items-center gap-1 text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/80"
-                    >
-                      View details →
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <ModelCard key={model._id} model={model} />
             ))}
           </motion.div>
         )}

@@ -6,12 +6,12 @@ import GetStarted from "@/components/sections/GetStarted";
 
 const HomePage = () => {
   return (
-    <div className="space-y-20">
+    <main className="space-y-20">
       <Slider />
       <RecentModels />
       <AboutAiModels />
       <GetStarted />
-    </div>
+    </main>
   );
 };
 

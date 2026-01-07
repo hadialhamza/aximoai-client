@@ -15,7 +15,7 @@ const MyBtn = ({
 }) => {
   // --- 1. Base Styles ---
   const baseStyles =
-    "relative inline-flex items-center justify-center font-bold tracking-wide transition-all duration-300 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none active:scale-95 group overflow-hidden cursor-pointer";
+    "relative inline-flex items-center justify-center font-bold tracking-wide transition-all duration-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none active:scale-95 group overflow-hidden cursor-pointer";
 
   // --- 2. Variants ---
   const variants = {

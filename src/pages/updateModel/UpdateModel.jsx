@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
@@ -18,11 +19,13 @@ import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
 import MyBtn from "@/components/ui/buttons/MyBtn";
 import Input from "@/components/ui/input/Input";
 import UpdateModelSkeleton from "@/components/skeletons/UpdateModelSkeleton";
+import { uploadImage } from "@/utils/imageUpload";
 
 const UpdateModel = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useSecureAxios();
+  const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -34,6 +37,7 @@ const UpdateModel = () => {
     image: "",
     description: "",
   });
+  const [imageUploading, setImageUploading] = useState(false);
 
   useEffect(() => {
     document.title = "Update Model | AximoAI";
@@ -81,6 +85,21 @@ const UpdateModel = () => {
     setModel((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageUploading(true);
+    try {
+      const url = await uploadImage(file);
+      setModel((prev) => ({ ...prev, image: url }));
+    } catch (error) {
+      Swal.fire("Error", error?.message || "Image upload failed", "error");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -122,6 +141,8 @@ const UpdateModel = () => {
         data?.modifiedCount > 0 || data?.acknowledged || data?.success === true;
 
       if (updated) {
+        await queryClient.invalidateQueries(["recentModels"]);
+        await queryClient.invalidateQueries(["models"]);
         await Swal.fire({
           icon: "success",
           title: "Updated!",
@@ -224,16 +245,36 @@ const UpdateModel = () => {
               />
             </div>
 
-            <Input
-              label="Image URL"
-              name="image"
-              type="url"
-              value={model.image}
-              onChange={handleChange}
-              placeholder="https://example.com/model-cover.png"
-              icon={ImageIcon}
-              required
-            />
+            {/* Image Upload Section */}
+            <div>
+              <Input
+                label="Model Image"
+                name="image"
+                type="file"
+                onChange={handleImageUpload}
+                icon={ImageIcon}
+                accept="image/*"
+              />
+              <div className="flex flex-col gap-4 mt-2">
+                {/* Helper Text */}
+                {imageUploading && (
+                  <p className="text-sm text-primary animate-pulse">
+                    Uploading image...
+                  </p>
+                )}
+
+                {/* Preview */}
+                {model.image && (
+                  <div className="relative w-full h-48 bg-slate-100 dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                    <img
+                      src={model.image}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
 
             <Input
               label="Description"

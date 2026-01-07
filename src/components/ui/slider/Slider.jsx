@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade, Navigation } from "swiper/modules";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Sparkles, Rocket, PlusSquare } from "lucide-react";
 import MyBtn from "@/components/ui/buttons/MyBtn";
@@ -56,9 +55,6 @@ const slides = [
 ];
 
 const SlideContent = ({ slide, isActive }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -84,11 +80,10 @@ const SlideContent = ({ slide, isActive }) => {
 
   return (
     <motion.div
-      ref={ref}
       variants={containerVariants}
       initial="hidden"
-      animate={isActive && isInView ? "visible" : "hidden"}
-      className="space-y-4 md:space-y-6"
+      animate={isActive ? "visible" : "hidden"}
+      className="space-y-3 md:space-y-6"
     >
       <motion.div variants={itemVariants}>
         <span className="font-heading inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -109,17 +104,13 @@ const SlideContent = ({ slide, isActive }) => {
         </p>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="pt-2">
+      <motion.div variants={itemVariants} className="sm:pt-2">
         <div className="space-y-2">
           {slide.features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -18 }}
-              animate={
-                isActive && isInView
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: -18 }
-              }
+              animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -18 }}
               transition={{ delay: 0.45 + index * 0.1, duration: 0.45 }}
               className="flex items-center space-x-2"
             >
@@ -144,7 +135,7 @@ const SlideContent = ({ slide, isActive }) => {
         </div>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="pt-4">
+      <motion.div variants={itemVariants} className="sm:pt-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <div className="text-sm font-semibold text-primary sm:text-base">
@@ -162,7 +153,7 @@ const SlideContent = ({ slide, isActive }) => {
                 Browse Models
               </MyBtn>
             </Link>
-            <Link to="/add-model">
+            <Link to="dashboard/add-model">
               <MyBtn
                 variant="outline"
                 className="bg-slate-900/60 text-slate-100 border-primary/80 hover:bg-slate-900/80 hover:border-primary"
@@ -191,6 +182,7 @@ const Slider = () => {
           delay: 5200,
           disableOnInteraction: false,
         }}
+        touchStartPreventDefault={false}
         pagination={{
           clickable: true,
           el: ".hero-pagination",
@@ -201,7 +193,7 @@ const Slider = () => {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
-        className="h-[550px] lg:h-[650px]"
+        className="h-[550px] lg:h-[650px] touch-pan-y"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -216,6 +208,7 @@ const Slider = () => {
                       : { scale: 1.03, opacity: 0.65 }
                   }
                   transition={{ duration: 0.9, ease: "easeOut" }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <motion.img
                     src={slide.image}
@@ -241,7 +234,7 @@ const Slider = () => {
       </Swiper>
 
       {/* Navigation Buttons in Container */}
-      <div className="absolute bottom-10 left-0 right-0 z-10 pointer-events-none">
+      <div className="absolute bottom-5 left-0 right-0 z-10 pointer-events-none">
         <Container className="flex items-center justify-between">
           <div className="swiper-button-prev static! mt-0! rounded-full bg-slate-900/60 p-2 text-primary! transition-all duration-300 hover:scale-110 hover:bg-slate-900/80 pointer-events-auto cursor-pointer after:hidden sm:p-3">
             <svg
@@ -278,7 +271,7 @@ const Slider = () => {
       </div>
 
       {/* Pagination - Center Bottom */}
-      <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform sm:bottom-12">
+      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
         <div className="rounded-full bg-slate-900/60 px-3 py-2 sm:px-4">
           <div className="hero-pagination flex items-center justify-center gap-2" />
         </div>

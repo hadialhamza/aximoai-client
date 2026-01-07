@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useSecureAxios from "@/hooks/useSecureAxios";
 import useAuth from "@/hooks/useAuth";
 import Container from "@/components/ui/container/Container";
+import { useQuery } from "@tanstack/react-query";
 import {
   BarChart,
   Bar,
@@ -10,7 +11,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 import {
   Package,
@@ -26,14 +26,6 @@ import { Link } from "react-router";
 const Dashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useSecureAxios();
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({
-    totalModels: 0,
-    totalPurchases: 0,
-    topFramework: "N/A",
-  });
-  const [chartData, setChartData] = useState([]);
-  const [recentActivity, setRecentActivity] = useState([]);
   const [greeting, setGreeting] = useState("Welcome back");
 
   useEffect(() => {
@@ -42,56 +34,52 @@ const Dashboard = () => {
     if (hour < 12) setGreeting("Good Morning");
     else if (hour < 18) setGreeting("Good Afternoon");
     else setGreeting("Good Evening");
+  }, []);
 
-    const fetchData = async () => {
-      try {
-        // Parallel data fetching
-        const [modelsRes, purchasesRes] = await Promise.all([
-          axiosSecure.get("/my-models"),
-          axiosSecure.get("/my-purchases"),
-        ]);
+  const { data: dashboardData, isLoading } = useQuery({
+    queryKey: ["dashboard", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const [modelsRes, purchasesRes] = await Promise.all([
+        axiosSecure.get("/my-models"),
+        axiosSecure.get("/my-purchases"),
+      ]);
+      return {
+        models: modelsRes.data.result || [],
+        purchases: purchasesRes.data.result || [],
+      };
+    },
+  });
 
-        const models = modelsRes.data.result || [];
-        const purchases = purchasesRes.data.result || [];
+  const models = dashboardData?.models || [];
+  const purchases = dashboardData?.purchases || [];
 
-        // Calculate Stats
-        const frameworkCounts = {};
-        models.forEach((model) => {
-          const fw = model.framework || "Others";
-          frameworkCounts[fw] = (frameworkCounts[fw] || 0) + 1;
-        });
+  // Calculate Stats
+  const frameworkCounts = {};
+  models.forEach((model) => {
+    const fw = model.framework || "Others";
+    frameworkCounts[fw] = (frameworkCounts[fw] || 0) + 1;
+  });
 
-        const sortedFrameworks = Object.entries(frameworkCounts).sort(
-          (a, b) => b[1] - a[1]
-        );
-        const topFramework =
-          sortedFrameworks.length > 0 ? sortedFrameworks[0][0] : "None";
+  const sortedFrameworks = Object.entries(frameworkCounts).sort(
+    (a, b) => b[1] - a[1]
+  );
+  const topFramework =
+    sortedFrameworks.length > 0 ? sortedFrameworks[0][0] : "None";
 
-        setStats({
-          totalModels: models.length,
-          totalPurchases: purchases.length,
-          topFramework,
-        });
+  const stats = {
+    totalModels: models.length,
+    totalPurchases: purchases.length,
+    topFramework,
+  };
 
-        // Prepare Chart Data (Top 5 frameworks to keep chart clean)
-        const data = sortedFrameworks
-          .slice(0, 5)
-          .map(([name, count]) => ({ name, count }));
-        setChartData(data);
+  // Prepare Chart Data (Top 5 frameworks to keep chart clean)
+  const chartData = sortedFrameworks
+    .slice(0, 5)
+    .map(([name, count]) => ({ name, count }));
 
-        // Recent Models (first 5)
-        setRecentActivity(models.slice(0, 5));
-      } catch (error) {
-        console.error("Failed to fetch dashboard data", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (user) {
-      fetchData();
-    }
-  }, [user, axiosSecure]);
+  // Recent Models (first 5)
+  const recentActivity = models.slice(0, 5);
 
   // Custom Chart Tooltip
   const CustomTooltip = ({ active, payload, label }) => {
@@ -108,7 +96,7 @@ const Dashboard = () => {
     return null;
   };
 
-  if (loading) return <DashboardSkeleton />;
+  if (isLoading) return <DashboardSkeleton />;
 
   return (
     <Container className="py-8 space-y-8">
