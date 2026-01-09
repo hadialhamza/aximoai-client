@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 // create instance of axios call
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://aximoai.vercel.app",
 });
 
 // custom hook for call axios with authorization header for secure apis

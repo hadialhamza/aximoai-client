@@ -7,8 +7,6 @@ import {
   Layers,
   GitBranch,
   ShoppingCart,
-  CheckCircle2,
-  Code2,
 } from "lucide-react";
 import Container from "@/components/ui/container/Container";
 import SectionHeading from "@/components/ui/sectionHeading/SectionHeading";
@@ -16,19 +14,16 @@ import MyBtn from "@/components/ui/buttons/MyBtn";
 
 const AboutAiModels = () => {
   return (
-    <section className="py-16 md:py-24 bg-base-200/30">
+    <section className="pt-10">
       <Container>
         {/* 1. Header Section */}
-        <div className="mb-16">
+        <div className="mb-10">
           <SectionHeading
             badge="Knowledge Base"
             icon={BrainCircuit}
             title={
               <span className="leading-tight">
-                Understanding{" "}
-                <span className="text-primary">
-                  AI Models
-                </span>
+                Understanding <span className="text-primary">AI Models</span>
               </span>
             }
             description="Explore the architecture, lifecycle, and value of AI models in the AximoAI ecosystem."
@@ -36,7 +31,7 @@ const AboutAiModels = () => {
           />
         </div>
 
-        {/* 2. Bento Grid Layout */}
+        {/* 2. Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Main Explainer (Large Card) */}
           <div className="col-span-1 md:col-span-7 lg:col-span-8 bg-base-100 border border-border rounded-3xl p-8 shadow-sm relative overflow-hidden group">

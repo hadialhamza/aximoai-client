@@ -1,243 +1,117 @@
-# 🌐 ModelMatrix AI
+# 🌐 Aximo AI
 
 ### _AI Model Inventory • Marketplace • Management Platform_
 
-ModelMatrix AI is a full-stack web application designed to manage,
-explore, and purchase AI models.\
-It features authentication, CRUD operations, secure private routes,
-model purchasing, filtering, animations, and more --- all wrapped inside
-a modern, elegant UI.
+**Aximo AI** is a premium, full-stack web application designed to manage, explore, and purchase AI models.
+It features a robust **Admin & User Dashboard**, secure authentication, role-based access control, and a stunning, responsive UI powered by **React 19** and **Tailwind CSS v4**.
 
 ---
 
 ## 🚀 Live Links
 
-Platform Link
-
----
-
-🌍 **Live Client:** _[https://model-matrix-ai.netlify.app/]  
- 🛠️ **Backend API:** _[https://modelmatrixapi.vercel.app/]
+| Link Type | URL |
+| :--- | :--- |
+| **🌍 Client Live** | [https://aximoai.netlify.app](https://aximoai.netlify.app) |
+| **🛠️ Server Repo** | [https://github.com/hadialhamza/model-matrix-ai-server](https://github.com/hadialhamza/model-matrix-ai-server) |
+| **💻 Client Repo** | [https://github.com/hadialhamza/b12-a10-new-client-repo](https://github.com/hadialhamza/b12-a10-new-client-repo) |
 
 ---
 
 ## ✨ Project Features
 
+### 🎨 UI & UX
+- **Modern & Premium Design**: Glassmorphism effects, smooth transitions, and a curated color palette.
+- **Responsive Layout**: Fully optimized for Desktop, Tablet, and Mobile devices.
+- **Dark/Light Mode**: Seamless theme switching using DaisyUI & Tailwind.
+- **Animations**: Powered by Framer Motion for interactive feedback.
+
 ### 🔓 Public Features
+- **Explore Models**: Browse a comprehensive inventory of AI models.
+- **Advanced Search & Filter**: Filter by Framework, Dataset, Use-Case, or Keywords.
+- **Detailed Model Views**: In-depth information for every model.
 
-- Browse all AI models
-- Search and filter models (Framework, Dataset, Use-Case, Keyword)
-- Beautiful responsive layout
-- Light / Dark Theme (DaisyUI)
-- Detailed model description pages
-- Modern UI animations with Framer Motion
-
-### 🔐 Authenticated Features
-
-- Login & Register using Firebase Authentication
-- Add new AI models (Create)
-- Update existing models (Update)
-- Delete models (Delete)
-- View **My Models**
-- View **My Purchases**
-- Secure Protected Routes using PrivateRoute
-- SweetAlert2 notifications
-- Secure Axios interceptor with Firebase token
+### 🔐 Authenticated Features (User & Admin)
+- **Firebase Authentication**: Secure Login & Registration (Email/Password, Google).
+- **Dashboard Access**:
+    - **Admin Dashboard**: Manage users, oversee inventory, and view system stats.
+    - **User Dashboard**: Track added models, view purchase history, and manage profile.
+- **Model Management**:
+    - **Add Model**: Submit new AI models to the marketplace.
+    - **Update/Delete**: Manage your contributions securely.
+- **Purchase System**: Integrated workflow for acquiring model licenses.
+- **Secure Data Fetching**: JWT-based protection using Secure Axios Interceptors.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-
-- ⚛️ React (Vite)
-- 🎨 TailwindCSS + DaisyUI
-- 💫 Framer Motion
-- 🔥 Firebase Authentication
-- ⚡ Axios + Secure Axios Hook
-- 🍞 SweetAlert2 Notifications
+- **Framework**: [React 19](https://react.dev/) (Vite)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [DaisyUI](https://daisyui.com/)
+- **State Management**: [TanStack Query](https://tanstack.com/query/latest) (React Query)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/) + React Icons
 
 ### Backend
-
-- 🚀 Express.js
-- 🍃 MongoDB (Native Driver)
-- 🔐 Firebase Admin Token Verification
-
----
-
-## 📁 Folder Structure (Client)
-
-    src/
-     ├── Components/
-     │   ├── Navbar/
-     │   ├── Footer/
-     │   ├── Pages/
-     │   │   ├── Home/
-     │   │   ├── Login/
-     │   │   ├── Register/
-     │   │   ├── AddModel/
-     │   │   ├── UpdateModel/
-     │   │   ├── ModelDetails/
-     │   │   ├── AllModels/
-     │   │   ├── MyModels/
-     │   │   ├── MyPurchase/
-     │   │   └── Error/
-     │   └── Shared/
-     │
-     ├── hooks/
-     │   ├── useAuth.js
-     │   ├── useAxios.js
-     │   └── useSecureAxios.js
-     │
-     ├── Context/
-     │   └── AuthProvider.jsx
-     │
-     ├── Firebase/
-     │   └── firebase.config.js
-     │
-     ├── Router/
-     │   ├── Router.jsx
-     │   └── PrivateRoute.jsx
-     │
-     └── main.jsx
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB (Native Driver)
+- **Auth Verification**: Firebase Admin SDK
 
 ---
 
 ## 🔐 Authentication Flow
 
-1.  User signs in via Firebase.
-
-2.  Firebase generates an ID Token.
-
-3.  Secure Axios attaches this token in headers:
-
-        Authorization: Bearer <token>
-
-4.  Server verifies token using Firebase Admin SDK.
-
-5.  Access granted to protected endpoints.
+1.  **User Login**: Authenticates via Firebase (Client).
+2.  **Token Generation**: Firebase returns a secure Access Token.
+3.  **Secure Request**: Axios Interceptor attaches `Authorization: Bearer <token>` to headers.
+4.  **Server Verification**: Backend verifies token validity using Firebase Admin SDK.
+5.  **Access Granted**: User gains access to protected routes and data.
 
 ---
 
-## 🧩 API Endpoints
+## 🏃‍♂️ Run Locally
 
-### Models
+### 1. Clone the Client Repository
+```bash
+git clone https://github.com/hadialhamza/b12-a10-new-client-repo.git
+cd b12-a10-new-client-repo
+```
 
-Method Route Description
+### 2. Install Dependencies
+```bash
+npm install
+```
 
----
+### 3. Setup Environment Variables
+Create a `.env` file in the root directory and add your Firebase config:
 
-GET `/models` Get all models
-GET `/models/:id` Get a model
-POST `/models` Add model (protected)
-PUT `/models/:id` Update model (protected)
-DELETE `/models/:id` Delete model (protected)
+```env
+VITE_apiKey=your_api_key
+VITE_authDomain=your_project_id.firebaseapp.com
+VITE_projectId=your_project_id
+VITE_storageBucket=your_project_id.appspot.com
+VITE_messagingSenderId=your_sender_id
+VITE_appId=your_app_id
+VITE_API_URL=https://your-backend-url
+```
 
-### User Models
-
-Method Route Description
-
----
-
-GET `/my-models?email=...` User's added models
-
-### Purchases
-
-Method Route Description
-
----
-
-POST `/purchase` Purchase a model
-GET `/purchases?email=...` Purchased models
-
----
-
-## 🌟 Pages Included
-
-- **Home Page**
-- **All Models Page** (Filters + Search + Sorting)
-- **Model Details Page**
-- **Add Model Page** _(Private)_
-- **Update Model Page** _(Private)_
-- **My Models Page** _(Private)_
-- **My Purchases Page** _(Private)_
-- **Login Page**
-- **Register Page**
-- **404 Error Page**
-- **Loading Pages**
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 
 ---
 
-## 🖥️ Installation Guide
+## 📷 Screenshots
 
-### 1️⃣ Clone the repo
+> _Add your project screenshots here to showcase the dashboard, home page, and features._
 
-    git clone https://github.com/your-repo-link
-    cd modelmatrix-ai
-
-### 2️⃣ Install dependencies
-
-    npm install
-
-### 3️⃣ Create `.env` file
-
-    VITE_apiKey=xxxx
-    VITE_authDomain=xxxx
-    VITE_projectId=xxxx
-    VITE_storageBucket=xxxx
-    VITE_messagingSenderId=xxxx
-    VITE_appId=xxxx
-
-    VITE_API_URL=https://your-backend-url
-
-### 4️⃣ Run the app
-
-    npm run dev
+| Home Page | Dashboard |
+| :---: | :---: |
+| ![Home](https://placehold.co/600x400?text=Home+Page+Preview) | ![Dashboard](https://placehold.co/600x400?text=Dashboard+Preview) |
 
 ---
 
-## 🎨 UI Screenshots (Add yours)
-
-    📌 Home Page
-    📌 All Models
-    📌 Model Details
-    📌 Add Model
-    📌 Update Model
-    📌 My Models
-    📌 My Purchases
-    📌 Theme Toggle Demo
-
----
-
-## 📦 Deployment
-
-### Client:
-
-- Firebase Hosting
-- Netlify / Vercel (optional)
-
-### Server:
-
-- Vercel / Render / Railway
-
-### Database:
-
-- MongoDB Atlas
-
----
-
-## 🙌 Final Notes
-
-ModelMatrix AI is designed with: - Clean UI\
-
-- Fast Performance\
-- Modern Animations\
-- Fully Protected Backend\
-- Professional Architecture
-
-If you want an **even more premium README** with screenshots included,
-just share your images and I'll finalize it beautifully.
-
----
-
-Made with ❤️ for your Assignment.
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).

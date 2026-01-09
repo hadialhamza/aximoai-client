@@ -6,7 +6,7 @@ import GetStarted from "@/components/sections/GetStarted";
 
 const HomePage = () => {
   return (
-    <main className="space-y-20">
+    <main className="space-y-30">
       <Slider />
       <RecentModels />
       <AboutAiModels />
